@@ -138,6 +138,7 @@ strip !(:860-898)
 trajout nucleic.pqr pdb dumpq
 go
 ~~~
+{: .leap}
 
 VMD
 1. Load .pqr file
