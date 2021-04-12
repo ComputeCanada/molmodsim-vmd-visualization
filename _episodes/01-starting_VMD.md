@@ -10,7 +10,7 @@ objectives:
 keypoints:
 - "Connect to a compute node using TigerVNC client and SSH tunnel"
 ---
- 
+
 ## Introduction
 Molecular modelling and simulations are widely used in structural biology, chemistry, drug dessign, materials science and many other fields of science. Visualization is a primary tool for accessing quality of molecular models, and visualization in invaluable for understanding atomic details of molecular functions. Visualization of complex macromolecular structures is challenging and requires specialized software.
 
@@ -22,7 +22,7 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 - Numerous built-in tools for analysis of structures and trajectories
 - Powerful scripting capability
 - Publication quality protorealistic ray-tracing rendering
-- Making trajectory movies
+- Ability to make custom trajectory movies
 
 ### Using VMD on Compute Canada systems
 To use VMD on CC systems you need to establish graphical connenction. Currently thare are two options: remote desktop with VNC or JupyterHub.
@@ -52,17 +52,30 @@ Drawbacks:
 - Available only on Graham
 - Visualization node is shared between all logged in users, may be lagging depending on the workload.
 
-#### Connecting graphically to a compute node. 
+### Connecting to the training cluster:
 
+[Jupyter Hub](http://jupyter.moledyn.ace-net.training)   
+
+SSH
+~~~
+ssh user01@moledyn.ace-net.training
+~~~
+{: .bash}
+
+Guest usernames: user[01-45]  
+mistakenly.presently.innocent.bass
+
+
+#### Connecting graphically to a compute node. 
 Connect to the training cluster with SSH.  
 ~~~
-ssh user01@nova.ace-net.training
+ssh user01@moledyn.ace-net.training
 ~~~
 {: .bash}
 
 Allocate some resources:
 ~~~
-salloc -c1 --mem-per-cpu=1000 --time=2:0:0
+salloc -c1 --mem-per-cpu=1000 --time=3:0:0
 ~~~
 {: .bash}
 ~~~
