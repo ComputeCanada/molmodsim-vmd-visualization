@@ -47,11 +47,13 @@ div.string          { @include cdSetup($color-output); }
 div.vmd             { @include cdSetup($color-vmd); }
 div.python          { @include cdSetup($color-source); }
 div.leap            { @include cdSetup($color-leap); }
+div.cpptraj         { @include cdSetup($color-leap); }
 div.python          { @include cdSetup($color-python); }
 
 
 div.file-content::before,
 div.leap::before,
+div.cpptraj::before,
 div.string::before,
 div.source::before,
 div.output::before,
@@ -68,6 +70,7 @@ div.source::before    { content: "Code"; }
 div.vmd::before       { content: "VMD"; }
 div.python::before    { content: "Python"; }
 div.leap::before      { content: "Leap"; }
+div.cpptraj::before   { content: "CppTraj"; }
 
 div.error::before  { background-color: #ffebe6; content: "Error"; }
 div.warning:before { background-color: #f8f4e8; content:" Warning"; }
@@ -75,6 +78,7 @@ div.output::before { background-color: #efefef; content: "Output"; }
 div.string::before  { background-color: #efefef; content: "Text"; }
 div.file-content::before  { background-color: #efefef; content: "File content"; }
 div.leap::before  { background-color: #f7f0f0; content: "LEaP"; }
+div.cpptraj::before  { background-color: #f7f0f0; content: "CppTraj"; }
 div.vmd::before  { background-color: #ecf0ee; content: "VMD"; }
 div.python::before  { background-color: #e3e9f5; content: "Python"; }
 

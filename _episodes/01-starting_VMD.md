@@ -12,7 +12,7 @@ keypoints:
 ---
 
 ## Introduction
-Molecular modelling and simulations are widely used in structural biology, chemistry, drug dessign, materials science and many other fields of science. Visualization is a primary tool for accessing quality of molecular models, and visualization in invaluable for understanding atomic details of molecular functions. Visualization of complex macromolecular structures is challenging and requires specialized software.
+Molecular modelling and simulations are widely used in structural biology, chemistry, drug design, materials science and many other fields of science. Visualization is a primary tool for accessing quality of molecular models, and visualization in invaluable for understanding atomic details of molecular functions. Visualization of complex macromolecular structures is challenging and requires specialized software.
 
 VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, modeling and analysis of molecular systems. It is developed and freely distributed by the Theoretical and Computational Biophysics Group at the University of Illinois at Urbana-Champaign.
 
@@ -21,11 +21,11 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 - Wide variety of supported file formats
 - Numerous built-in tools for analysis of structures and trajectories
 - Powerful scripting capability
-- Publication quality protorealistic ray-tracing rendering
+- Publication quality photorealistic ray-tracing rendering
 - Ability to make custom trajectory movies
 
 ### Using VMD on Compute Canada systems
-To use VMD on CC systems you need to establish graphical connenction. Currently thare are two options: remote desktop with VNC or JupyterHub.
+To use VMD on CC systems you need to establish graphical connection. Currently there are two options: remote desktop with VNC or JupyterHub.
 
 #### JupyterHub 
 JupyterHub provides remote desktop via noVNC (the open source VNC client). It is convenient to use because it just runs in a browser without need to setup ssh tunnel. 
