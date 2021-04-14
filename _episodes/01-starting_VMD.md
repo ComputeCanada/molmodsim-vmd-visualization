@@ -91,24 +91,8 @@ Start VNC server
 vncserver
 ~~~
 {: .bash}
-Enter your new VNC password when prompted. 
-~~~
-You will require a password to access your desktops.
-
-Password:
-Verify:
-Would you like to enter a view-only password (y/n)? n
-xauth:  file /home/user01/.Xauthority does not exist
-
-New 'node1.int.novatest.ace-net.training:1 (user01)' desktop is node1.int.novatest.ace-net.training:1
-
-Creating default startup script /home/user01/.vnc/xstartup
-Creating default config /home/user01/.vnc/config
-Starting applications specified in /home/user01/.vnc/xstartup
-Log file is /home/user01/.vnc/node1.int.novatest.ace-net.training:1.log
-~~~
-{: .output}
-
+Enter your new VNC password when prompted.  
+Answer 'no' on the question about view-only password.  
 Note the number of the .log file. The number of the log file matches the number of VNC session. You need to know it to make connection. The first session is listening at port  5901, the second at 5902 .. etc.
 
 Ensure that the server is running:
@@ -130,7 +114,7 @@ Now you need to connect your local computer to the node where the VNC server is 
 
 Open a new terminal tab or window and run the command:
 ~~~
-ssh user01nova.ace-net.training -L 5901:node1:5901
+ssh user01moledyn.ace-net.training -L 5901:node1:5901
 ~~~
 {: .bash}
 
@@ -148,7 +132,7 @@ vncserver -kill :1
 > How to modfy SSH command to open tunnel to the login node?
 >> ## Solution
 >> ~~~
->> ssh user01nova.ace-net.training -L 5901:localhost:5901
+>> ssh user01moledyn.ace-net.training -L 5901:localhost:5901
 >> ~~~
 >> {: .bash}
 > {: .solution}
