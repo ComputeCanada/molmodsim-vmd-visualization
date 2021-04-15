@@ -9,9 +9,5 @@ In his workshop you will learn how to visualize and analyze single molecules, 3D
 
 {% comment %} This is a comment in Liquid {% endcomment %}
 
-> ## Prerequisites
->
-> FIXME
-{: .prereq}
 
 {% include links.md %}

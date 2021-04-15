@@ -62,10 +62,6 @@ ssh user01@moledyn.ace-net.training
 ~~~
 {: .bash}
 
-Guest usernames: user[01-45]  
-mistakenly.presently.innocent.bass
-
-
 #### Connecting graphically to a compute node. 
 Connect to the training cluster with SSH.  
 ~~~
