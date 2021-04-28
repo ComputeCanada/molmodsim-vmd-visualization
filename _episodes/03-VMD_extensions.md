@@ -40,7 +40,7 @@ Time dependence of RMSD in a molecular dynamics simulation can ve computed using
 ~~~
 cd /scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
 ~~~
-{:.bash}
+{: .language-bash}
 
 Use prmtop_nowat.parm7 and mdcrd_nowat.nc to plot RMSD along the trajectory. Check the `plot` box to plot RMSD.
 
@@ -56,7 +56,8 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 module load StdEnv/2020 gcc vmd ffmpeg
 vmd
 ~~~
-{:.bash}
+{: .language-bash}
+
 - `Extensions` -> `Visualization` -> `Movie Maker`
 - `Movie settings` -> `Rotation about Y axis`
 - `Format` -> `MPEG2(ffmpeg)`
@@ -76,7 +77,7 @@ source $EBROOTAMBERTOOLS/amber.sh
 cd ~/scratch/workshop/pdb/6N4O/simulation/setup
 cpptraj prmtop.parm7
 ~~~
-{:.bash}
+{: .language-bash}
 
 ~~~
 trajin inpcrd.rst7
@@ -117,7 +118,7 @@ make linux-64-thr
 ln -s ~/tachyon/compile/linux-64-thr/tachyon ~/bin/tachyon
 echo 'PATH=$PATH:$HOME/bin' >> $HOME/.bashrc
 ~~~
-{: .bash}
+{: .language-bash}
 
 ### References
 [VMD Introductory tutorial](https://doi.org/10.1002/0471250953.bi0507s24)

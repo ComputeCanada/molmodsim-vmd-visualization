@@ -29,6 +29,7 @@ All functions available from GUI and much more are available as commands. The co
 Commands can be entered in the terminal window where you typed "vmd", or in `TC console` available in the `Extensions` tool bar. For description of all available commands see [Help on Tcl Text Commands](https://www.ks.uiuc.edu/Research/vmd/vmd-1.9.4/ug/node121.html)
 
 Let's use our first command `pdbload`. This command will download and open a PDB file:
+
 ~~~
 mol pdbload 1si4
 ~~~
@@ -119,12 +120,13 @@ If you are lost simply press the `=` key to reset view.
 cd  ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
 vmd
 ~~~
-{:.bash}
+{: .language-bash}
+
 ~~~
 mol new prmtop.parm7
 mol add file mdcrd_nowat.nc
 ~~~
-{:.vmd}
+{: .vmd}
 
 - Viewing trajectories
    - Interpolating coordinates to make trajectory animation run smoother:   

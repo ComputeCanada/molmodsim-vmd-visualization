@@ -60,20 +60,20 @@ SSH
 ~~~
 ssh user01@moledyn.ace-net.training
 ~~~
-{: .bash}
+{: .language-bash}
 
 #### Connecting graphically to a compute node. 
 Connect to the training cluster with SSH.  
 ~~~
 ssh user01@moledyn.ace-net.training
 ~~~
-{: .bash}
+{: .language-bash}
 
 Allocate some resources:
 ~~~
 salloc -c1 --mem-per-cpu=1000 --time=3:0:0
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 salloc: Granted job allocation 2
 salloc: Waiting for resource configuration
@@ -86,7 +86,8 @@ Start VNC server
 ~~~
 vncserver
 ~~~
-{: .bash}
+{: .language-bash}
+
 Enter your new VNC password when prompted.  
 Answer 'no' on the question about view-only password.  
 Note the number of the .log file. The number of the log file matches the number of VNC session. You need to know it to make connection. The first session is listening at port  5901, the second at 5902 .. etc.
@@ -95,7 +96,7 @@ Ensure that the server is running:
 ~~~
 vncserver -list
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 TigerVNC server sessions:
 
@@ -112,7 +113,7 @@ Open a new terminal tab or window and run the command:
 ~~~
 ssh user01moledyn.ace-net.training -L 5901:node1:5901
 ~~~
-{: .bash}
+{: .language-bash}
 
 Replace the port number and the node name with the appropriate values.
 
@@ -122,7 +123,7 @@ When you are done close VNC session on the remote:
 ~~~
 vncserver -kill :1
 ~~~
-{: .bash}
+{: .language-bash}
 
 >## Challenge
 > How to modfy SSH command to open tunnel to the login node?
@@ -130,7 +131,7 @@ vncserver -kill :1
 >> ~~~
 >> ssh user01moledyn.ace-net.training -L 5901:localhost:5901
 >> ~~~
->> {: .bash}
+>> {: .language-bash}
 > {: .solution}
 {: .challenge}
 
@@ -141,9 +142,8 @@ Open a terminal:
 module load StdEnv/2020 gcc apbs vmd
 vmd
 ~~~
-{: .bash}
+{: .language-bash}
 
 Three windows will open: `VMD OpenGL Display`, `VMD Main`, and `VMD command window`. Do not close any of them.
 
 {% include links.md %}
-
