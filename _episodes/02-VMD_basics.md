@@ -17,11 +17,11 @@ As an example will be using X-ray crystallographic structure of human hemoglobin
 
 ####  Downloading files from Protein Data Bank
 VMD can directly query PDB database.
-![](../fig/pdb_tool.png)
+![VMD-Main > Extensions > Data > PDB Database Query]({{ root }}/fig/pdb_tool.png){:width="400"}
 
 Enter "1si4" and click `Load into new molecule in VMD`.  
 
-![](../fig/hemoglobin-1.png){:width="400"}
+![Hemoglobin rendered as sticks]({{ root }}/fig/hemoglobin-1.png){:width="400"}
 
 #### Using commands
 All functions available from GUI and much more are available as commands. The command line interface allows to use more options than available from GUI. VMD has built-in TCL programming language, which is available from the command line. This interpreter gives you ability to write your own processing and visualization functions utilizing any existing VMD functions and variables. 
@@ -64,7 +64,7 @@ If you are lost simply press the `=` key to reset view.
 - Change `Coloring Method` to `Chain`  
 - Try to get a better illumination by moving lights: `Mouse`->`Move Light`
 
-![](../fig/hemoglobin-2.png){:width="400"}
+![Hemoglobin rendered as "New Cartoon"]({{ root }}/fig/hemoglobin-2.png){:width="400"}
 
 - Create a representation
 - Double click to turn representations on/off without deleting them
@@ -75,12 +75,12 @@ If you are lost simply press the `=` key to reset view.
 - Selecting a a residue: `residue` (starts from 0), `resid` (starts from 1)
 - Selecting an atom: `index` (starts from 0), `serial` (starts from 1)
 
-![](../fig/hemoglobin-3.png){:width="400"}
+![Hemoglobin rendered as backbone with transparent surface]({{ root }}/fig/hemoglobin-3.png){:width="400"}
 
 >## Challenge
 >Reproduce the following figure
 >
->![](../fig/hemoglobin.png){: width="480"}
+>![Hemoglobin protein with ligand]({{ root }}/fig/hemoglobin.png){: width="480"}
 >>## Solution
 >>select chain A  
 >>`chain A` 
