@@ -104,8 +104,8 @@ The most important Display settings enabling ray tracing are `Shadows` and `Amb.
 
 |-----------------------------|-------------------------|---------------------------------------|
 |:---------------------------:|:-----------------------:|:-------------------------------------:|
-| ![](../fig/snapshot.png) Snapshot    | ![](../fig/ambient_occl.png) Tachyon, AoChalky | ![](../fig/ambient_occl_edgy.png) Tachyon, AoEdgy  |
-| ![](../fig/trans_snapshot.png) Snapshot    | ![](../fig/trans_max_1.png) Tachyon, BlownGlass, trans_max_surfaces 1| |
+| ![](../fig/snapshot.png) Snapshot        | ![](../fig/ambient_occl.png) Tachyon, AoChalky | ![](../fig/ambient_occl_edgy.png) Tachyon, AoEdgy  |
+| ![](../fig/trans_snapshot.png) Snapshot  | ![](../fig/trans_max_1.png) Tachyon, BlownGlass, trans_max_surfaces 1| |
 
 Compile and install Tachyon
 ~~~
