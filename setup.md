@@ -1,6 +1,8 @@
 ---
 title: Setup
 ---
+Download [data](https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop.tar.gz)
+
 WINDOWS USERS.
 1. Install [MobaXterm](https://mobaxterm.mobatek.net/)
 2. Install [TigerVNC viewer](https://bintray.com/tigervnc/stable/tigervnc/1.11.0) (vncviewer64-1.11.0.exe or vncviewer-1.11.0.exe)   
