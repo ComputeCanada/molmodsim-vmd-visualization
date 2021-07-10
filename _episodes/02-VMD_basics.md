@@ -24,7 +24,7 @@ Enter "1si4" and click `Load into new molecule in VMD`.
 ![Hemoglobin rendered as sticks]({{ page.root }}/fig/hemoglobin-1.png){:width="400"}
 
 #### Using commands
-All functions available from GUI and much more are available as commands. The command line interface allows to use more options than available from GUI. VMD has built-in TCL programming language, which is available from the command line. This interpreter gives you ability to write your own processing and visualization functions utilizing any existing VMD functions and variables. 
+You can use all functions available in GUI from the command line. The command-line interface is more flexible. With the command line, you can use more options than are accessible from GUI. In addition to commands, VMD offers the built-in TCL programming language. TCL interpreter available from the command-line allows you to write processing and visualization scripts utilizing any existing VMD functions and variables. 
 
 Commands can be entered in the terminal window where you typed "vmd", or in `TC console` available in the `Extensions` tool bar. For description of all available commands see [Help on Tcl Text Commands](https://www.ks.uiuc.edu/Research/vmd/vmd-1.9.4/ug/node121.html)
 
