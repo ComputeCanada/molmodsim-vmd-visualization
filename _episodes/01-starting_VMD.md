@@ -139,7 +139,7 @@ vncserver -kill :1
 Open a terminal: 
 `Applications` --> `System Tools` --> `Mate Terminal`
 ~~~
-module load StdEnv/2020 gcc apbs vmd
+module load vmd
 vmd
 ~~~
 {: .language-bash}
