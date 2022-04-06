@@ -34,8 +34,8 @@ The drawbacks:
 - It is currently available only on Beluga.
 - You can't control on which of the compute nodes the remote desktop will be launched 
 
-JupyterHub Servers:
-- [Beluga](https://jupyterhub.beluga.calculcanada.ca/hub/login)
+JupyterHub Servers on Clusters:
+- [Link](https://docs.computecanada.ca/wiki/JupyterHub#JupyterHub_on_clusters)
 
 1. Login with your CC credentials
 2. Spin up a server
@@ -58,7 +58,7 @@ Drawbacks:
 
 SSH
 ~~~
-ssh user01@moledyn.ace-net.training
+ssh user001@moledyn.ace-net.training
 ~~~
 {: .language-bash}
 
@@ -111,7 +111,7 @@ Now you need to connect your local computer to the node where the VNC server is 
 
 Open a new terminal tab or window and run the command:
 ~~~
-ssh user01moledyn.ace-net.training -L 5901:node1:5901
+ssh user001@moledyn.ace-net.training -L 5901:node1:5901
 ~~~
 {: .language-bash}
 
