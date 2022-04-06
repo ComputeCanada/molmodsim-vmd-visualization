@@ -28,11 +28,11 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 To use VMD on CC systems you need to establish graphical connection. Currently there are two options: remote desktop with VNC or JupyterHub.
 
 #### JupyterHub 
-JupyterHub provides remote desktop via noVNC (the open source VNC client). It is convenient to use because it just runs in a browser without need to setup ssh tunnel. 
+JupyterHub provides remote desktop via noVNC (the open source VNC client). It is convenient to use because it allocates resources and launches remote desktop runs in a browser in one step without need to any port forwarding setup. 
 
 The drawbacks:
-- It is currently available only on Beluga.
-- You can't control on which of the compute nodes the remote desktop will be launched 
+- It is currently not available on Graham.
+- You can't control on which of the compute nodes the remote desktop will be launched. 
 
 JupyterHub Servers on Clusters:
 - [Link](https://docs.computecanada.ca/wiki/JupyterHub#JupyterHub_on_clusters)

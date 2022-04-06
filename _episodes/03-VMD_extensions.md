@@ -53,7 +53,7 @@ With a custom animation script you have full control of camera movements and spe
 Much better image rendering can be done in a reasonable time on an HPC cluster. Typically you would use VMD to write scene description files of every trajectory frame for subsequent rendering with a ray tracing engine such as Tachyon.Then you would submit a script for rendering multiple frames in parallel on hundreds of CPU's. Then you would encode all frames in a movie with ffmpeg. Much better compression algorithms such as H.265/HEVC or Google VP9 with much higher quality settings can be used to encode an animation with `ffmpeg`.
 
 ~~~
-module load StdEnv/2020 gcc vmd ffmpeg
+module load vmd ffmpeg
 vmd
 ~~~
 {: .language-bash}
@@ -72,7 +72,7 @@ Surfaces, isosurfaces, and other representations can be colored by electrostatic
 APBS requires a PDB file with atomic partial charges and radii as an input. Such file can be easily prepared from a simulation topology file. 
 
 ~~~
-module load StdEnv/2020 gcc vmd apbs ambertools
+module load vmd apbs ambertools
 source $EBROOTAMBERTOOLS/amber.sh
 cd ~/scratch/workshop/pdb/6N4O/simulation/setup
 cpptraj prmtop.parm7
@@ -89,7 +89,7 @@ go
 
 VMD
 1. Load .pqr file
-2. Reperesentation Surf or QuickSurf 
+2. Representation Surf or QuickSurf 
 3. `Extensions` -> `Analysis` -> `APBS electrostatics` ->  `Run APBS`
 4. When prompted `Load ABBS into top molecule`
 5. Select coloring method `Volume`
