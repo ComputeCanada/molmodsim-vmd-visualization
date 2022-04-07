@@ -65,20 +65,20 @@ ssh user001@moledyn.ace-net.training
 #### Connecting graphically to a compute node. 
 Connect to the training cluster with SSH.  
 ~~~
-ssh user01@moledyn.ace-net.training
+ssh user001@moledyn.ace-net.training
 ~~~
 {: .language-bash}
 
 Allocate some resources:
 ~~~
-salloc -c1 --mem-per-cpu=1000 --time=3:0:0
+salloc -c2 --mem-per-cpu=1000 --time=3:0:0
 ~~~
 {: .language-bash}
 ~~~
 salloc: Granted job allocation 2
 salloc: Waiting for resource configuration
 salloc: Nodes node1 are ready for job
-[user01@node1 ~]$ 
+[user001@node1 ~]$ 
 ~~~
 {: .output}
 
