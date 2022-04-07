@@ -117,6 +117,7 @@ If you are lost simply press the `=` key to reset view.
 #### High Quality Rendering
 - Use ray tracing program Tachyon or Tachyon Internal  (if VMD is compiled with it)
 - Installing Tachyon:
+
 ~~~
 cd ~
 mkdir bin
@@ -127,6 +128,8 @@ make linux-64-thr
 ln -s ~/tachyon/compile/linux-64-thr/tachyon ~/bin/tachyon
 echo 'PATH=$PATH:$HOME/bin' >> $HOME/.bashrc
 ~~~
+{: .language-bash}
+
 - Use ambient occlusion lightning for photorealistic images. 
 - Check out [Publication Figure Rendering With Tachyon](https://www.ks.uiuc.edu/Research/vmd/minitutorials/tachyonao/) for more details.
 
@@ -136,9 +139,6 @@ On training cluster:
 cd ~/scratch
 cp /tmp/workshop.tar.gz .
 tar -xf workshop.tar.gz 
-cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
-ml vmd
-vmd
 ~~~
 {: .language-bash}
 
@@ -150,6 +150,13 @@ curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/dow
 
 
 #### Load topology and trajectory files
+~~~
+cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
+ml vmd
+vmd
+~~~
+{: .language-bash}
+
 ~~~
 mol new prmtop_nowat.parm7
 mol addfile mdcrd_nowat.nc
