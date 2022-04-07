@@ -1,5 +1,5 @@
 ---
-title: "Using VMD on Compute Canada Systems"
+title: "Using VMD on Digital Research Alliance of Canada systems"
 teaching: 10
 exercises: 0
 questions:
@@ -24,7 +24,7 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 - Publication quality photorealistic ray-tracing rendering
 - Ability to make custom trajectory movies
 
-### Using VMD on Compute Canada systems
+### Using VMD
 To use VMD on CC systems you need to establish graphical connection. Currently there are two options: remote desktop with VNC or JupyterHub.
 
 #### JupyterHub 

@@ -47,7 +47,6 @@ On the `VMD Main` window menu select `File` -> `New Molecule`. This will open th
    - Rendermode. The GLSL mode turns on OpenGL extensions implementing programmable shading and transparency for higher quality molecular graphics. These features are not enabled by default.  
    - Projection 
 
-
 ### Interacting with molecules
 #### Obtaining good views for molecules
 Rotate, zoom in/out, translate, and set rotation center to get a desired view. Pressing any of these keys switches the mode of interaction. For example, when `s` key is pressed mouse cursor will change. In this mode click, hold and move on a trackpad/mouse will zoom in/out.   
