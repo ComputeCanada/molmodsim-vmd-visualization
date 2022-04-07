@@ -169,11 +169,14 @@ mol addfile mdcrd_nowat.nc
 ~~~
 module load ambertools
 cpptraj prmtop_nowat.parm7
-> trajin mdcrd_nowat.nc
-> trajout mdcrd_nowat.xtc
-> go
 ~~~
 {: .language-bash}
+~~~
+trajin mdcrd_nowat.nc
+trajout mdcrd_nowat.xtc
+go
+~~~
+{: .cpptraj}
 
 #### Visualizing trajectories
 - Interpolating coordinates to make trajectory animation run smoother:   
