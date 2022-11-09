@@ -12,6 +12,9 @@ carpentry: "bst"
 # Overall title for pages.
 title: "Visualizing Structures with VMD"
 
+# Email address, no mailto:
+email: "support@tech.alliancecan.ca?Subject=[MolModSim]+Molecular+Dynamics+workshop"
+
 # Life cycle stage of the lesson
 # See this page for more details: https://cdh.carpentries.org/the-lesson-life-cycle.html
 # Possible values: "pre-alpha", "alpha", "beta", "stable"
@@ -29,11 +32,10 @@ kind: "lesson"
 # Please don't change it: <USERNAME>/<PROJECT> is correct.
 repository: <USERNAME>/<PROJECT>
 
-# Email address, no mailto:
-email: "support@tech.alliancecan.ca?Subject=[MolModSim]+Molecular+Dynamics+workshop"
-
 # Sites.
 amy_site: "https://amy.carpentries.org/"
+bst_site: "https://docs.alliancecan.ca/wiki/Biomolecular_simulation"
+cc_site: "https://www.alliancecan.ca"
 carpentries_github: "https://github.com/carpentries"
 carpentries_pages: "https://carpentries.github.io"
 carpentries_site: "https://carpentries.org/"
