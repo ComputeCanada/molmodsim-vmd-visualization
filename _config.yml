@@ -30,7 +30,7 @@ kind: "lesson"
 repository: <USERNAME>/<PROJECT>
 
 # Email address, no mailto:
-email: "team@carpentries.org"
+email: "support@tech.alliancecan.ca?Subject=[MolModSim]+Molecular+Dynamics+workshop"
 
 # Sites.
 amy_site: "https://amy.carpentries.org/"
@@ -44,7 +44,7 @@ lc_site: "https://librarycarpentry.org/"
 swc_github: "https://github.com/swcarpentry"
 swc_pages: "https://swcarpentry.github.io"
 swc_site: "https://software-carpentry.org"
-template_repo: "https://github.com/carpentries/styles"
+template_repo: "https://github.com/acenet-arc/cc-carpentries-styles.git"
 training_site: "https://carpentries.github.io/instructor-training"
 workshop_repo: "https://github.com/carpentries/workshop-template"
 workshop_site: "https://carpentries.github.io/workshop-template"
