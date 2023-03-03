@@ -12,10 +12,13 @@ carpentry: "bst"
 # Overall title for pages.
 title: "Visualizing Structures with VMD"
 
+# Email address, no mailto:
+email: "support@tech.alliancecan.ca?Subject=[MolModSim]+Molecular+Dynamics+workshop"
+
 # Life cycle stage of the lesson
 # See this page for more details: https://cdh.carpentries.org/the-lesson-life-cycle.html
 # Possible values: "pre-alpha", "alpha", "beta", "stable"
-life_cycle: "beta"
+life_cycle: "stable"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -29,11 +32,10 @@ kind: "lesson"
 # Please don't change it: <USERNAME>/<PROJECT> is correct.
 repository: <USERNAME>/<PROJECT>
 
-# Email address, no mailto:
-email: "team@carpentries.org"
-
 # Sites.
 amy_site: "https://amy.carpentries.org/"
+bst_site: "https://docs.alliancecan.ca/wiki/Biomolecular_simulation"
+cc_site: "https://www.alliancecan.ca"
 carpentries_github: "https://github.com/carpentries"
 carpentries_pages: "https://carpentries.github.io"
 carpentries_site: "https://carpentries.org/"
@@ -44,7 +46,7 @@ lc_site: "https://librarycarpentry.org/"
 swc_github: "https://github.com/swcarpentry"
 swc_pages: "https://swcarpentry.github.io"
 swc_site: "https://software-carpentry.org"
-template_repo: "https://github.com/carpentries/styles"
+template_repo: "https://github.com/acenet-arc/cc-carpentries-styles.git"
 training_site: "https://carpentries.github.io/instructor-training"
 workshop_repo: "https://github.com/carpentries/workshop-template"
 workshop_site: "https://carpentries.github.io/workshop-template"
