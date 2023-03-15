@@ -6,17 +6,24 @@ questions:
 - "How to use VMD on Compute Canada clusters?"
 objectives:
 - "Learn how to run vmd on a compute node"   
-- "Learn how to connect grahically to VMD running on a compute node"
+- "Learn how to connect graphically to VMD running on a compute node"
 keypoints:
 - "Connect to a compute node using TigerVNC client and SSH tunnel"
 ---
 
 ## Introduction
-Molecular modelling and simulations are widely used in structural biology, chemistry, drug design, materials science and many other fields of science. Visualization is a primary tool for accessing quality of molecular models, and visualization is invaluable for understanding atomic details of molecular functions. Visualization of complex macromolecular structures is challenging and requires specialized software.
+
+{: .instructor_notes} 
+Molecular modelling and simulations are widely used in structural biology, chemistry, drug design, materials science and many other fields of science. Visualization is a primary tool for accessing quality of molecular models, and visualization is invaluable for understanding atomic details of molecular functions. Visualization of complex macromolecular structures is challenging and requires specialized software. 
 
 VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, modeling and analysis of molecular systems. It is developed and freely distributed by the Theoretical and Computational Biophysics Group at the University of Illinois at Urbana-Champaign.
+{: .instructor_notes} 
 
-#### VMD features
+{: .self_study_text} 
+- VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, modeling and analysis of molecular systems.
+{: .self_study_text} 
+
+### VMD features
 - Ability to work very efficiently with huge MD trajectories.
 - Wide variety of supported file formats
 - Numerous built-in tools for analysis of structures and trajectories
@@ -24,25 +31,27 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 - Publication quality photorealistic ray-tracing rendering
 - Ability to make custom trajectory movies
 
-### Using VMD
-To use VMD on CC systems you need to establish graphical connection. Currently there are two options: remote desktop with VNC or JupyterHub.
+## Connecting to a remote computer running VMD
+To use VMD GUI on Alliance clusters interactively you need to establish graphical connection. Currently there are two options: remote desktop with VNC or JupyterHub.
 
-#### JupyterHub 
-JupyterHub provides remote desktop via noVNC (the open source VNC client). It is convenient to use because it allocates resources and launches remote desktop runs in a browser in one step without need to any port forwarding setup. 
+### Connecting graphically to a cluster with JupyterHub 
+JupyterHub provides remote desktop via noVNC (the open source VNC client). JupyterHub runs in any browser. It is convenient to use as it allocates resources and launches remote desktop in one step without requiring any additional software.
 
-The drawbacks:
-- It is currently not available on Graham.
-- You can't control on which of the compute nodes the remote desktop will be launched. 
+Here is the list of [JupyterHubs on clusters](https://docs.computecanada.ca/wiki/JupyterHub#JupyterHub_on_clusters).
 
-JupyterHub Servers on Clusters:
-- [Link](https://docs.computecanada.ca/wiki/JupyterHub#JupyterHub_on_clusters)
-
+Steps to connect to a Jupyter Hub:
 1. Login with your CC credentials
-2. Spin up a server
+2. Request resources and spin up a Jupyter server
 3. Choose **'Desktop'** in JupyterLab Launcher
 
-#### Visualization nodes on Graham
-Graham has dedicated visualization nodes **gra-vdi.computecanada.ca**. To start using them you need to install TigerVNC Viewer. RealVNC or any other client will not work.  
+The drawbacks:
+- If cluster usage is high the Jupyter server may fail to start due to a timeout.
+
+### Connecting graphically to a cluster using TigerVNC
+#### Connecting to a visualization node on Graham
+Graham has dedicated visualization nodes **gra-vdi.computecanada.ca**. You need to install TigerVNC Viewer to use them (RealVNC or any other client will not work). 
+
+To start using a dedicated visualization node simply connect TigerVNC viewer to gra-vdi.computecanada.ca. 
 
 Advantages:
 - Direct connection from your laptop with TigerVNC Viewer.
@@ -52,98 +61,112 @@ Drawbacks:
 - Available only on Graham
 - Visualization node is shared between all logged in users, may be lagging depending on the workload.
 
-### Connecting to the training cluster:
+No modules are loaded on VDI nodes by default. Before you can use central modules you need to load CcEnv and StdEnv modules:
 
-[Jupyter Hub](http://jupyter.moledyn.ace-net.training)   
-
-SSH
 ~~~
-ssh user001@moledyn.ace-net.training
+module load CcEnv StdEnv/2020 cuda vmd
 ~~~
 {: .language-bash}
 
-#### Connecting graphically to a compute node. 
-Connect to the training cluster with SSH.  
+
+If graphical window is off screen, you can reposition and resize it. The following commands should work for most of you:
+
 ~~~
-ssh user001@moledyn.ace-net.training
+display reposition 400 400
+display resize 600 600
+~~~
+{: .vmd}
+
+You can save your settings in the initialization file. I'll show you how to do it later.
+
+#### Connecting to a compute node. 
+We will use Beluga as an example to illustrate connecting VNC to a compute node.
+
+##### 1. Connect to Beluga with SSH. 
+~~~
+ssh user@beluga.computecanada.ca
 ~~~
 {: .language-bash}
 
-Allocate some resources:
+##### 2. Allocate some resources:  
 ~~~
 salloc -c2 --mem-per-cpu=1000 --time=3:0:0
 ~~~
 {: .language-bash}
 ~~~
-salloc: Granted job allocation 2
+...
+salloc: Granted job allocation 35464975
 salloc: Waiting for resource configuration
-salloc: Nodes node1 are ready for job
-[user001@node1 ~]$ 
+salloc: Nodes bg11308 are ready for job
+[user@bg11308 ~]$ 
 ~~~
 {: .output}
 
-Start VNC server
+##### 3. Start VNC server
 ~~~
 vncserver
 ~~~
 {: .language-bash}
 
-Enter your new VNC password when prompted.  
-Answer 'no' on the question about view-only password.  
-Note the number of the .log file. The number of the log file matches the number of VNC session. You need to know it to make connection. The first session is listening at port  5901, the second at 5902 .. etc.
+Enter your new VNC password when prompted. Answer 'no' on the question about view-only password.  
 
-Ensure that the server is running:
-~~~
-vncserver -list
-~~~
-{: .language-bash}
-~~~
-TigerVNC server sessions:
+Server will display a line like this in its output after it has started:
 
-X DISPLAY #	PROCESS ID
-:1		13259
+~~~
+New 'bg11308.int.ets1.calculquebec.ca:1 (user)' desktop is bg11308.int.ets1.calculquebec.ca:1
 ~~~
 {: .output}
 
-Do not close this window.
+Here <mark>bg11308</mark> is the hostname of the node where the server is running and <mark>:1</mark> is the number of VNC session.  
+TigerVNC sessions are listening on port 5900 plus the session number, so in this example port number is 5900 + 1 = 5901. You will need host name and port number to connect your computer to the remote VNC session. 
 
-Now you need to connect your local computer to the node where the VNC server is listening. Compute nodes cannot be accessed directly from the Internet, but you can connect to the login node, and the login node can connect to any compute node. Thus, connection to a compute node should be also possible, right? How do we connect to the node1 at port 5901? We can instruct ssh client program to map port 5901 of node1 to our local computer. This type of connection is called "SSH tunneling" or "ssh port forwarding". SSH tunneling allows transporting networking data between computers over an encrypted SSH connection.
+##### 4. Open SSH tunnel to the remote computer
+{: .instructor_notes} 
+Now you need to connect your local computer to the node where the VNC server is listening. In order to access compute nodes, you must go through a login node as they are located on an internal network.
 
-Open a new terminal tab or window and run the command:
+We can use SSH client program to connect port 5901 of bg11308 directly to our local computer. This type of connection is called "SSH tunneling" or "SSH port forwarding". 
+{: .instructor_notes} 
+
+The following SSH command creates a tunnel between port 5901 on bg11308 and port 5901 on your local computer.
 ~~~
-ssh user001@moledyn.ace-net.training -L 5901:node1:5901
+ssh user@beluga.computecanada.ca -L 5901:bg11308:5901
 ~~~
 {: .language-bash}
 
-Replace the port number and the node name with the appropriate values.
+The format of the host:port specification is `local_port:remote_host:remote_port`. You can use any free local port.
 
-This SSH session created tunnel from port 5901 on your local computer to  port 5901 on node1. The tunnel will be active only while the session is running. Do not close this window and do not logout, this will close the tunnel and disconnect your laptop from node1. Once connection is established start VNC viewer on your local computer and connect to localhost:5901.
+The tunnel is active only while the session is running. Do not close this window and do not logout, this will close the tunnel and disconnect your laptop. 
 
-When you are done close VNC session on the remote:
+##### 5. Connect the local computer to the remote computer
+Start VNC viewer on your local computer and connect it to `localhost:5901`.
+
+##### 6. When you are done close VNC session on the remote:
 ~~~
 vncserver -kill :1
 ~~~
 {: .language-bash}
 
+If you don't terminate VNC sessions old .log and .pid files will be accumulating in the directory ~/.vnc, but don't worry, it is easy to clean them up:
+~~~
+rm ~/.vnc/*.log
+rm ~/.vnc/*.pid
+~~~
+{: .language-bash}
+
 >## Challenge
-> How to modfy SSH command to open tunnel to the login node?
+> What ssh command should user21 use to connect port 5999 of his laptop to VNC session :5 running on node2 of the cluster moledyn.ace-net.training?  
+>Answers:
+>1.  ssh user21@moledyn.ace-net.training -L 5999:localhost:5905
+>2.  ssh user21@moledyn.ace-net.training -L 5905:localhost:5999
+>3.  ssh user21@moledyn.ace-net.training -L 5999:node2:5905
+>4.  ssh user21@node2.ace-net.training -L 5999:localhost:5905
+>
 >> ## Solution
 >> ~~~
->> ssh user01moledyn.ace-net.training -L 5901:localhost:5901
+>> ssh user21@moledyn.ace-net.training -L 5999:node2:5905
 >> ~~~
 >> {: .language-bash}
 > {: .solution}
 {: .challenge}
-
-### Starting VMD
-Open a terminal: 
-`Applications` --> `System Tools` --> `Mate Terminal`
-~~~
-module load vmd
-vmd
-~~~
-{: .language-bash}
-
-Three windows will open: `VMD OpenGL Display`, `VMD Main`, and `VMD command window`. Do not close any of them.
 
 {% include links.md %}

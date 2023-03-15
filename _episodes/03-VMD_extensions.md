@@ -105,20 +105,8 @@ The most important Display settings enabling ray tracing are `Shadows` and `Amb.
 |-----------------------------|-------------------------|---------------------------------------|
 |:---------------------------:|:-----------------------:|:-------------------------------------:|
 | ![](../fig/snapshot.png) Snapshot        | ![](../fig/ambient_occl.png) Tachyon, AoChalky | ![](../fig/ambient_occl_edgy.png) Tachyon, AoEdgy  |
-| ![](../fig/trans_snapshot.png) Snapshot  | ![](../fig/trans_max_1.png) Tachyon, BlownGlass, trans_max_surfaces 1| |
+| ![](../fig/trans_snapshot.png) Snapshot  | ![](../fig/trans_max_1.png) Tachyon, BlownGlass, <br>\-\-trans_max_surfaces 1| |
 
-Compile and install Tachyon
-~~~
-cd ~
-mkdir bin
-wget http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.99b6/tachyon-0.99b6.tar.gz
-tar -xf tachyon-0.99b6.tar.gz
-cd tachyon/unix
-make linux-64-thr
-ln -s ~/tachyon/compile/linux-64-thr/tachyon ~/bin/tachyon
-echo 'PATH=$PATH:$HOME/bin' >> $HOME/.bashrc
-~~~
-{: .language-bash}
 
 ### References
 [VMD Introductory tutorial](https://doi.org/10.1002/0471250953.bi0507s24)
