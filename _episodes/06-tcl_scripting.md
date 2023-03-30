@@ -1,0 +1,214 @@
+---
+title: "Scripting in VMD"
+teaching: 20
+exercises: 0
+questions:
+- "How to start VMD in text mode?"
+- "How to use VMD commands?"
+objectives:
+- "Learn how to use basic VMD commands"
+- "Learn to write loops in VMD"
+- "Learn how to get help on VMD commands"
+keypoints:
+- ""
+---
+
+## Tcl Scripting in VMD
+In addition to commands, VMD offers the built-in Tcl programming language. VMD Tcl commands can help you investigate molecule properties and perform analysis.
+
+### Tcl language
+Tcl is shortened form of Tool Command Language. This language combines scripting with an interpreter that gets embedded in the application. There are embedded Tcl interpreters in both VMD and NAMD. Tcl interpreter available from the command-line allows you to write processing and visualization scripts utilizing any existing VMD functions and variables. For example, you have access to all information about loaded molecules such as coordinates, atom names, occupancy, and charge. 
+
+### Selecting atoms
+Rotating or translating molecule that we have done so far simply changes viewpoint. It does not change coordinates of the loaded molecules. In your work you may want to rotate/translate a molecule and save its modified coordinates. It may be useful for example if you want to prepare a simulation systems containing several copies of a molecule from one structure file.  
+
+Many VMD commands operate on selected groups of atoms rather than just on whole molecules. After a selection has been created, it can be modified (rotated, translated), different properties, such as occupancy and beta factors, can be set, and the modified selection can be saved as a file.
+
+As an example, let's select heavy atoms of the protein backbone:
+~~~
+set sel [atomselect top "noh backbone and protein"]
+~~~
+{: .vmd}
+If command is successful VMD responds with a name of the created selection function:
+~~~
+atomselect1
+~~~
+{: .output}
+In your case, the number of the function may be different, depending on how many selections have already been made.
+
+With this command we created a function for selecting atoms, and set a variable `sel` to point to it. `sel` is just the name of this variable, you can use any name you wish. You can think of the variable `sel` as a shortcut to `atomselect1`. Thus, `atomselect1` is equivalent to `$sel`. 
+
+### Working with selections
+What commands are available for `atomselect1`? To get help on commands available for the function `atomselect1` type `atomselect1` or `$sel`.
+
+Try using some of the commands:
+~~~
+$sel num # Returns  the number of atoms
+$sel writepdb backbone.pdb # writeXXX where XXX is a known format 
+$sel writegro backbone.gro 
+~~~
+{: .vmd}
+Let's make another selection using the same variable `sel`:
+~~~
+set sel [atomselect top "resname CYS and name CA"]
+~~~
+{: .vmd}
+~~~
+atomselect2
+~~~
+{: .output}
+This command resets the variable `sel`. After this command is executed `sel` points to `atomselect2`. This can be verified by displaying the selection text:
+~~~
+$sel text
+~~~
+{: .vmd}
+~~~
+resname CYS and name CA
+~~~
+{: .output}
+What happened to `atomselect1`? As you may have thought, `atomselect1` as well as any other previously created selections still exist:
+~~~
+atomselect list 
+~~~
+{: .vmd}
+Selections can be deleted using the `delete` command.
+~~~
+atomselect0 delete 
+~~~
+{: .vmd}
+
+### Changing properties of selected atoms
+We have selected CA atoms of all CYS residues of the protein. Let's do something useful with this selection: find out how may CYS residues are in our protein and what are their ID numbers:
+~~~
+set cys [$sel get resid] # make a list of CYS resid numbers
+llength $cys # count the number of elements in the list
+~~~
+{: .vmd}
+We can rename selected atoms:
+~~~
+ $sel set name C1A
+ $sel get name 
+~~~
+{: .vmd}
+We can manipulate any other attribute of the selection!
+
+### Viewing selections 
+To show a selection in graphical window we first need to choose a drawing method for a new representation and then add the new representation to the molecule:
+~~~
+ mol selection [$sel text]
+ mol representation vdw
+ mol addrep top
+~~~
+{: .vmd}
+
+### Moving selected atoms
+#### Translation
+~~~
+$sel moveby {0 50 0}
+~~~
+{: .vmd}
+
+#### Complex transformations (rotate + translate)
+The `move` command takes as an argument a [4x4] transformation matrix and applies it to the coordinates of each atom in the selection. A transformation matrix is computed from [3x3] rotation matrix and a translation vector. It is not straightforvard to obtain it by hand. VMD has various commands to help creating transformation matrices. 
+
+The main command for generating transformation matrices is `trans`. It can create matrices for many transformations such as:
+- centering a molecule
+- adding an offset 
+- rotation about any axis {x y z} 
+- rotation about about a vector 
+- rotation about a bond  
+
+Click [here](https://www.ks.uiuc.edu/Research/vmd/current/ug/node194.html) for more details about matrix routines. 
+
+Let's consider examples of some useful transformations. 
+
+#### Rotation around an axis
+Rotate a molecule around x-axis by 30 degrees:
+~~~
+set sel [atomselect top all]
+$sel move [trans axis x 30]
+~~~
+{: .vmd}
+
+#### Rotation around a bond
+Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
+
+![Cis- and trans- isomers of lutein]({{ page.root }}/fig/rotation.png){:width="400"}
+~~~
+# Select atoms to rotate
+set sel [atomselect top "not name H35 and within 1.2 of serial 1 to 21"]
+# Select rotation axis atoms
+set A1 [atomselect top "name C15"]
+set A2 [atomselect top "name C35"]
+# Get coordinates of these atoms
+set AC1 [lindex [$A1 get {x y z}] 0] 
+set AC2 [lindex [$A2 get {x y z}] 0]
+# Rotate selection
+$sel move [trans bond $AC1 $AC2 180 deg]
+~~~
+{: .vmd}
+
+[lindex](https://www.tcl.tk/man/tcl8.6/TclCmd/lindex.html) is a builtin Tcl command. It retrieves an element from a list.
+
+### Aligning molecules
+Although VMD has GUI tool for aligning molecules, it is limited for molecules where lists of equivalent atoms can be constructed using the same selections command. This means that molecules must have either same atom names or same order of atoms. Often this is not the case. For example you may want to align several structurally similar ligands, or two homologous proteins that do not have exactly the same sequence.  
+
+With Tcl commands you can construct two independent lists of equivalent atoms and then use them for aligning molecules. The command for generating transformation matrices is `measure fit`. It creates transformation matrix for aligning two atom selections.
+
+As an example, let's consider two carotenoid molecules: lutein [LUT.pdb](https://www.rcsb.org/ligand/LUT) and lycopene [LYC.pdb](https://www.rcsb.org/ligand/LYC).
+
+The following code assumes that ID of the reference molecule is 0 and ID of the molecule that we want to move is 1, so make sure you use the right molecule IDs.
+
+As these molecules have same polyene chains, but different end groups we will use middle part of molecules to align them. 
+
+![Cis- and trans- isomers of lutein]({{ page.root }}/fig/superposition.png){:width="600"}
+
+
+VMD will reorder both selections by index in the ascending order, so if the order of the selected atoms in the reference molecule is not the same as in the fit molecule you'll need to reorder them. 
+
+Follow the following steps:
+1. list atoms in the fit molecule in the order of their index.
+2. make the list of matching atoms of the reference molecule
+3. make the list describing the order in which the reference atoms should be used to match the fit molecule 
+
+Example:  
+fitmol   C18 C19 C20 C21 C50 C52  
+refmol   C20 C14 C15 C35 C34 C40  
+order      2   0   1   4   3   5  
+
+
+~~~
+set fitmol [atomselect 1 "name C18 C19 C20 C21 C50 C52"] 
+set refmol [atomselect 0 "name C20 C14 C15 C35 C34 C40"]
+set trans_mat [measure fit $fitmol $refmol order {2 0 1 4 3 5}]
+set allAtoms [atomselect 1 all] 
+$allAtoms move $trans_mat
+~~~
+{: .vmd}
+
+Click [here](https://www.ks.uiuc.edu/Research/vmd/vmd-1.6/ug/node188.html) for more details
+
+### Loops in VMD scripts
+Let's write a simple `for` loop that animates zooming out.
+A loop includes three statement:
+- initialization of a loop variable
+- termination condition
+- increment
+
+There statements are followed by a block of code that is executed repeatedly for each value of the loop variable.
+
+~~~
+for {set i 0} {$i < 200} {incr i} {scale by 0.99; display update}
+~~~
+{: .vmd}
+
+
+### Getting help on text commands
+You can get help with text commands in several ways: 
+1. This [link](https://www.ks.uiuc.edu/Research/vmd/vmd-1.9.4/ug/node121.html) provides a summary of basic text commands in VMD.  
+2. You can find a detailed description of all commands, as well as their syntax in the online [VMD manual](https://www.ks.uiuc.edu/Research/vmd/current/ug/node117.html).  
+3. Help on commands for atom selections. Type an atom selection function to see a list of commands for it, e.g. `atomselect0`.
+4. Builtin Tcl commands: https://www.tcl.tk/man/tcl8.6/TclCmd/contents.html
+
+Useful links:
+[Using the atomselect command](https://www.ks.uiuc.edu/Research/vmd/vmd-1.7.1/ug/node181.html)

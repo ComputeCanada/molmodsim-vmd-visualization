@@ -41,6 +41,19 @@ The RMSD calculator works well when two molecules are composed of the same atoms
 Often you need to align molecules or molecular complexes using a subset of atoms. The simplified selection option available in RMSD calculator does not allow to select different groups of atom for different molecules. 
 
 
+
+### RMSD Trajectory Tool
+Time dependence of RMSD in a molecular dynamics simulation can be computed using the RMSD Trajectory Tool.
+
+Go to the directory with example MD data:
+~~~
+cd /scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
+~~~
+{: .language-bash}
+
+Use prmtop_nowat.parm7 and mdcrd_nowat.xtc to plot RMSD along the trajectory. Check the `plot` box to plot RMSD.
+
+
 ### Making input files for NAMD.
 NAMD uses beta and occupancy fields of PDB files as an input for various types of calculations. 
 For example, such files are used to define 
@@ -61,16 +74,6 @@ $selAll writepdb "constraints.pdb"
 ~~~
 {: .vmd}
 
-### RMSD Trajectory Tool
-Time dependence of RMSD in a molecular dynamics simulation can be computed using the RMSD Trajectory Tool.
-
-Go to the directory with example MD data:
-~~~
-cd /scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
-~~~
-{: .language-bash}
-
-Use prmtop_nowat.parm7 and mdcrd_nowat.xtc to plot RMSD along the trajectory. Check the `plot` box to plot RMSD.
 
 
 ### Measuring distances between atoms vs time
@@ -115,7 +118,7 @@ set ylabel "Distance, (A)"
 plot "dist_P-Na+.csv"  with lines
 ~~~
 
-#### Measuring distances getween groups of atoms
+#### Measuring distances between groups of atoms
 
 Measure distance between centers of mass of protein and nucleic acids
 1. `measure center <selection>` - compute coordinates of the center of mass 
@@ -272,9 +275,6 @@ The most important Display settings enabling ray tracing are `Shadows` and `Amb.
 {% include links.md %}
 
 
-1si4 5yce
-
-
 proc trajfit { } {
 #FIT FRAMES
 set ref [atomselect top "backbone and resid 5 to 100" frame 0]
@@ -282,22 +282,6 @@ set sel [atomselect top "backbone and resid 5 to 100"]
 set all [atomselect top "all" ]
 set n [molinfo top get numframes]
 
-
- for { set i 1 } { $i < $n } { incr i } {
-    $sel frame $i
-    $all frame $i
-    $all move [measure fit $sel $ref]
-  }
-}
-
-proc makemovie { } {
-for { set i 0 } { $i < 10 } { incr i } {
-   animate goto $i
-   puts "Frame $i"
-   display update
-   render snapshot tmp/$i.ppm
-   }
-}
 
 proc makemovie { } {
 set steps  840; # number of frames per complete sequence
