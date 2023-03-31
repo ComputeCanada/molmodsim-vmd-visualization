@@ -1,5 +1,5 @@
 ---
-title: "A first look at the VMD command-line interface"
+title: "A first look at the command-line interface"
 teaching: 20
 exercises: 0
 questions:
@@ -12,8 +12,6 @@ objectives:
 keypoints:
 - ""
 ---
-
-5a31 - a good example of multichain protein complex
 
 ## Introducing VMD commands
 ### Starting VMD in text mode.

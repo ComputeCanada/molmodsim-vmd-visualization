@@ -1,5 +1,5 @@
 ---
-title: "Scripting in VMD"
+title: "Scripting"
 teaching: 20
 exercises: 0
 questions:
@@ -199,6 +199,100 @@ There statements are followed by a block of code that is executed repeatedly for
 
 ~~~
 for {set i 0} {$i < 200} {incr i} {scale by 0.99; display update}
+~~~
+{: .vmd}
+
+
+
+### Making input files for NAMD.
+NAMD uses beta and occupancy fields of PDB files as an input for various types of calculations. 
+For example, such files are used to define 
+- position restraint parameters (restraint reference positions and force constant values for each atom)  
+- temperature coupling parameters (temperature coupling coefficient for each atom).
+- constant forces
+- collective variables
+
+~~~
+mol pdbload 1si4
+set selAll [atomselect 0 all]
+$selAll set occupancy 0
+set selBackbone [atomselect 0 "protein and backbone"]
+$selBackbone set occupancy 2.0
+set selHEM [atomselect 0 "resname HEM"]
+$selHEM set occupancy 10.0
+$selAll writepdb "constraints.pdb"
+~~~
+{: .vmd}
+
+
+### Measuring distances between atoms vs time
+#### Measuring distance between a pair of atoms
+Go to the directory with example MD data:
+~~~
+cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
+~~~
+{: .language-bash}
+
+This is a simulation of argonaute protein complexed with microRNA. As an example, let's measure the distance between some RNA phosphate atoms and sodium ions attached to them.
+
+The following are some pairs you might want to consider:  
+C895:P, Na+904:Na+  
+C890:P, Na+1136:Na+  
+C886:P, Na+1136:Na+  
+A883:P, Na+966:Na+  
+
+~~~
+mol new prmtop_nowat.parm7
+mol addfile mdcrd_nowat.xtc
+set file [open "distance.csv" w]
+puts $file "Time (ns), Distance (A)"
+set nf [molinfo top get numframes]
+set sel1 [atomselect top "resid 895 and name P"]
+set sel2 [atomselect top "resid 904"]
+set bondList [measure bond "[$sel1 get index] [$sel2 get index]" first 0 last $nf]
+for {set i 0} {$i < $nf} {incr i} {
+   set dist [lindex $bondList $i]
+   set time [expr $i/1000.0]  
+   puts $file "$time, $dist" 
+   }
+close $file 
+~~~
+{: .vmd}
+
+#### Plotting data with Gnuplot
+Start Gnuplot by typing gnuplot. Then it gnuplot command prompt enter the following commands:
+
+~~~
+set xlabel "Time (ns)"
+set ylabel "Distance, (A)"
+plot "dist_P-Na+.csv"  with lines
+~~~
+
+#### Measuring distances between groups of atoms
+Measure distance between centers of mass of protein and nucleic acids
+1. `measure center <selection>` - compute coordinates of the center of mass 
+2. `vecsub <vec2> <vec1>` - find vector connecting two centers of mass 
+2. `veclength <vector>` - compute distance  
+
+~~~
+mol new prmtop_nowat.parm7
+mol addfile mdcrd_nowat.xtc waitfor all
+set file [open "distance.csv" w]
+puts $file "Time (ns), Distance (A)"
+set nf [molinfo top get numframes]
+set prot [atomselect top "noh protein"]
+set nucl [atomselect top "noh nucleic"]
+
+for {set i 0} {$i < $nf} {incr i} {
+   $prot frame $i
+   $nucl frame $i  
+   set prot_center [measure center $prot weight mass]
+   set nucl_center [measure center $nucl weight mass]   
+   set dist [veclength [vecsub $prot_center $nucl_center]]
+   set time [expr $i/1000.0]  
+   puts $file "$time, $dist" 
+   }
+close $file 
 ~~~
 {: .vmd}
 
