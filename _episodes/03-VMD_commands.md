@@ -1,7 +1,7 @@
 ---
 title: "A first look at the command-line interface"
-teaching: 20
-exercises: 0
+teaching: 10
+exercises: 5
 questions:
 - "How to start VMD in text mode?"
 - "How to use VMD commands?"
@@ -17,14 +17,14 @@ keypoints:
 ### Starting VMD in text mode.
 The VMD program can also be used in text mode. Everything you can do in VMD interactively can also be done with commands and scripts. In text mode you interact with VMD using commands. The command-line interface is more flexible than GUI and it allows VMD to read commands from script files. With commands, you can use options than are not available in GUI, and you can run VMD non-interactively. Command-line access to VMD functions is very useful in HPC environment for batch jobs. The text mode is typically used for analyzing MD simulations and rendering animations. 
 
-How to start vmd in text mode? If graphical display is not available VMD will automatically fallback into text mode. When you are running analysis scripts on a system with graphical display you may want to enforce text mode to prevent VMD from opening GUI. To do so start vmd with the option `-dispdev text`  
+How to start vmd in text mode? If graphical display is not available VMD will automatically fallback into text mode. When you are running analysis scripts on a system with graphical display you may want to enforce text mode to prevent VMD from opening GUI. To do so start vmd with the option `-dispdev text`.  
 
 ### Entering commands
 Commands can be entered in two ways: 
 - in the `VMD command window`  
-- in `Tcl console` available under the `Extensions` menu
+- in `Tk Console` available under the `Extensions` menu
 
-VMD command window is very basic, you can only type commands, and it is not possible to edit command lines. Tcl console offers history, autocompletion, and syntax highlighting.
+VMD command window is very basic, you can only type commands, and it is not possible to edit command lines. Tk console offers history, autocompletion, and syntax highlighting.
 
 Let's run our first command.
 ~~~
@@ -72,5 +72,18 @@ display reposition 100 700
 
 Display position 0 0 corresponds to the lower left display corner.
 
+>## Get to know more commands
+>Here are some commands you can run to see how they work:
+>~~~
+>display resetview 
+>display backgroundgradient on
+>display projection orthographic
+>display projection perspective
+>scale by 2
+>axes location lowerleft
+>axes location off
+>~~~
+>{: .vmd}
+{: .challenge}
 
 {% include links.md %}

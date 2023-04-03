@@ -1,7 +1,7 @@
 ---
 title: "Visualizing and analyzing trajectories"
 teaching: 20
-exercises: 0
+exercises: 10
 questions:
 - "How to load structure files and trajectories into VMD?"
 - "How to animate trajectories?"
@@ -35,25 +35,26 @@ A trajectory file contains the coordinates for all atoms over the course of a si
 To load a trajectory, we need both the structure and the trajectory file. 
 First load a structure file as a new molecule. VMD can read structure files in different formats, such as AMBER7 Parm, XPLOR PSF, GROMACS GRO, PDB, etc.). File types are recognized by extension. If a file has a non-standard extension you can select format manually.
 
-It is best to use structure files that contain connectivity (topology, mol2) information whenever possible. In the absence of connectivity information, VMD uses distances between atoms to determine which ones are connected. It does not work perfectly all the time. Stretched bonds may go undetected, and there may be incorrect bonds formed between non-bonded atoms that clash. If you use the wrong bonds, your visualization will be incorrect. The automatic bond determination can be disabled when loading structure files:
+It is best to use structure files that contain connectivity information whenever possible. Examples of file formats with connectivity are molecular topology files or mol2 files. In the absence of connectivity information, VMD uses distances between atoms to determine which ones are connected. Automatic bond determinations does not work perfectly all the time. Stretched bonds may go undetected, and there may be incorrect bonds formed between non-bonded atoms are too close to each other. If you use the wrong bonds, your visualization will be incorrect. The automatic bond determination can be disabled when loading structure files from the command line. 
+
+As an example, open `Tk Console` and run the following commands to load the file 7xcq.pdb without automatic bond determination:
 
 ~~~
-mol new 1si4.pdb autobonds off
+cd ~/workshop/pdb/7XCQ/
+mol new 7xcq.pdb autobonds off
 ~~~
 {: .vmd}
 
-Our training dataset is located in the directory `workshop/pdb/6N4O/simulation/sim_pmemd/4-production`. As a structure file we will be using AMBER7 parameter file `prmtop_nowat.parm7`. Change into this directory and load the topology file.
+Delete all the molecules or restart vmd.
 
-Once a molecular structure has been loaded you can add a trajectory to it: highlight the molecule, go to `File`->`Load Data into Molecule` and choose `mdcrd_nowat.xtc`. It is a long trajectory with 3000 frames. To make loading faster you can load every 5th frame.
+Our training simulation dataset is located in the directory `workshop/pdb/6N4O/simulation/sim_pmemd/4-production`. As a structure file we will be using AMBER7 parameter file `prmtop_nowat.parm7`. Change into this directory and load the topology file.
+
+Once a molecular structure has been loaded you can add a trajectory to it: highlight the molecule, go to `File`->`Load Data into Molecule` and choose `mdcrd_nowat.xtc`. It is a long trajectory with 3000 frames. To make loading faster load every 5th frame.
 
 >## Loading trajectory using commands on the training cluster
+>
 >~~~
 >cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
->module load vmd
->vmd
->~~~
->{: .language-bash}
->~~~
 >mol new prmtop_nowat.parm7
 >mol addfile mdcrd_nowat.xtc step 5
 >~~~
@@ -76,6 +77,7 @@ Once a molecular structure has been loaded you can add a trajectory to it: highl
 >~~~
 >{: .cpptraj}
 {: .callout}
+
 #### Visualizing trajectories
 - To make trajectory animation run smoother you can interpolate coordinates:   
 `Graphical representations`->`Trajectory`->`Trajectory Smoothing Window Size`    
@@ -99,8 +101,8 @@ You can calculate the time dependence of RMSD in a molecular dynamics simulation
 5. You can optionally save rmsd in a file so you can make a nice figure with your favorite plotting software, and check `Plot` box to view the result.
  
 
->## Exercise
-> Align frames using backbone of all protein residues. Compute RMSD of two selections: backbone atoms of residues 780-800 and 820-840.  
+>## Calculate the RMSD for two groups of atoms over time 
+> Align frames using backbone of all protein residues. Compute trajectory RMSD for two selections of backbone atoms: residues 790-810 and 820-840.  
 >
 > 1. Considering both selections, what is the minimum and the maximum RMSD?
 > 2. How does the RMSD change when you include all atoms?
@@ -108,9 +110,9 @@ You can calculate the time dependence of RMSD in a molecular dynamics simulation
 > 4. Are your RMSD results affected by the previous superposition step?
 >
 >> ## Solution
->> 1. The minimum is 0.339, the maximum is 6.259.
+>> 1. The minimum is 0.39, the maximum is 6.1.
 >> 2. RMSD increases when all atoms are considered.
->> 3. The first group, 780-800.
+>> 3. The first group, 790-810.
 >> 4. Yes
 >> {: .language-bash}
 > {: .solution}
@@ -118,7 +120,7 @@ You can calculate the time dependence of RMSD in a molecular dynamics simulation
 
 ### RMSD Calculator    
 The `RMSD calculator` is similar to the `RMSD Trajectory Tool`, but it calculates the RMSD between two molecules. It is located under `Extensions`->`Analysis`->`RMSD Calculator`.   
->## Exercise: Calculating RMSD between molecules 
+>## Calculation of the RMSD between two molecules
 >The RMSD calculator works well when two molecules are composed of the same atoms, but  the alignment will fail if atom selection in the reference molecule differs from that in the target molecule. The issue is illustrated in this exercise.
 >1. Compute RMSD of two molecules: PDB ID 1si4 and 4n7n. For the calculation, use only chain A backbone atoms.
 >2. When all chain A residues are used for alignment, why does the alignment fail?
@@ -131,8 +133,6 @@ The `RMSD calculator` is similar to the `RMSD Trajectory Tool`, but it calculate
 >>
 >{: .solution}
 {: .challenge}
-
-
 
 
 {% include links.md %}

@@ -1,11 +1,13 @@
 ---
-title: "Photorealistic Rendering and Making Movies"
-teaching: 20
-exercises: 0
+title: "Making movies and rendering photorealistic images"
+teaching: 15
+exercises: 10
 questions:
 - "What is Photorealistic Rendering in VMD, and how can I use it?"
+- "How to make animations?"
 objectives:
 - "Learn how to make realistically looking figures "
+- "learn to make animations?"
 keypoints:
 - ""
 ---
@@ -41,7 +43,7 @@ Compare normal, glsl and OptiX rendering modes.
 #### Real Time Ray Tracing (RTX-RTRT)
 Real Time Ray Tracing solves limitations of the Tachyon OptiX interactive ray tracer by providing full-time ray-tracing in the main OpenGL VMD window. Real Time Ray Tracing using NVidia RTX cores is supported in version 1.9.4a55 of VMD on Linux platform.  
 
-Installation:
+Installation (works on gra-vdi, siku):
 ~~~
 # Configure where to install vmd
 export VMDHOME=$HOME/scratch/VMD
@@ -121,6 +123,14 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 Exercise:
 Create a movie showing the diffusion of several Na+ ions. It is good to choose residues 966, 1136, 904, 903 because they display association-dissociation dynamics.
 
+The basic loop for making a trajectory movie must render image of each trajectory frame and save them. It is convenient to write a tcl procedure for this.
+
+Tcl procedures are defined as follows: 
+
+proc { arguments } { 
+   block of code
+}
+
 ~~~
 proc makemovie { start end } {
 for { set i $start } { $i < $end } { incr i } {
@@ -133,7 +143,7 @@ for { set i $start } { $i < $end } { incr i } {
 ~~~
 {: .vmd}
 
-Make sure the directory tmp exists in the working directory!
+Make sure the directory `tmp` exists in the working directory!
 Try adding rotation and scaling in the for loop:
 
 ~~~
@@ -141,7 +151,6 @@ rotate x by 0.5
 scale by 0.995
 ~~~
 {: .vmd}
-
 
 It is better to eliminate translational/rotational motions before making an animation. Add code aligning each frame to the reference. 
 
@@ -158,5 +167,6 @@ ffmpeg -start_number -i %d.ppm -vcodec libx264 -pix_fmt yuv420p -crf 18 -s 1080x
 ~~~
 {: .language-bash}
 
+[Installing FFMPEG on Windows](https://phoenixnap.com/kb/ffmpeg-windows): Download ffmpeg-git-essentials.7z from https://www.gyan.dev/ffmpeg/builds/
 
 {% include links.md %}

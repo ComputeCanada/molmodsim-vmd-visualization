@@ -23,5 +23,8 @@ LINUX USERS:
     - CentOS: sudo yum install tigervnc
 2. Install [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD)
 
+If you don't already have a source code editor, install one. VSCode, Atom, and Notepad++ are good choices.
+
+For encoding movies install FFMPEG [Windows](https://phoenixnap.com/kb/ffmpeg-windows), [Linux](https://www.tecmint.com/install-ffmpeg-in-linux/), [MacOS](https://phoenixnap.com/kb/ffmpeg-mac)
 
 {% include links.md %}

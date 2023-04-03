@@ -1,26 +1,30 @@
 ---
 title: "Scripting"
-teaching: 20
-exercises: 0
+teaching: 30
+exercises: 10
 questions:
-- "How to start VMD in text mode?"
-- "How to use VMD commands?"
+- "How to work with atom selections?"
+- "How to change attributes of selected atoms?"
+- "How to move and superimpose selections?"
+- "How to write loops"
+- "How to measure distances between groups of atoms?"
 objectives:
-- "Learn how to use basic VMD commands"
+- "Learn to work with atom selections?"
+- "Learn to move and superimpose selections?"
 - "Learn to write loops in VMD"
-- "Learn how to get help on VMD commands"
+- "Learn to measure distances between groups of atoms?"
 keypoints:
 - ""
 ---
 
 ## Tcl Scripting in VMD
-In addition to commands, VMD offers the built-in Tcl programming language. VMD Tcl commands can help you investigate molecule properties and perform analysis.
+In addition to commands, VMD offers the built-in Tcl programming language. VMD Tcl scripts can help you investigate molecule properties and perform analysis.
 
 ### Tcl language
-Tcl is shortened form of Tool Command Language. This language combines scripting with an interpreter that gets embedded in the application. There are embedded Tcl interpreters in both VMD and NAMD. Tcl interpreter available from the command-line allows you to write processing and visualization scripts utilizing any existing VMD functions and variables. For example, you have access to all information about loaded molecules such as coordinates, atom names, occupancy, and charge. 
+Tcl is shortened form of Tool Command Language. This language combines scripting with an interpreter that gets embedded in the application. There are embedded Tcl interpreters in both VMD and NAMD. Tcl interpreter available from the command-line allows you to write data processing and visualization scripts utilizing any existing VMD functions and variables. For example, you have access to all information about loaded molecules such as coordinates, atom names, occupancy, and charge. 
 
 ### Selecting atoms
-Rotating or translating molecule that we have done so far simply changes viewpoint. It does not change coordinates of the loaded molecules. In your work you may want to rotate/translate a molecule and save its modified coordinates. It may be useful for example if you want to prepare a simulation systems containing several copies of a molecule from one structure file.  
+Rotating or translating molecule that we have done so far simply changes viewpoint. It does not change coordinates of the loaded molecules. In your work you may want to rotate or translate a molecule and save its modified coordinates. It may be useful for example if you want to prepare a simulation system containing several copies of a molecule prepared from one structure file.  
 
 Many VMD commands operate on selected groups of atoms rather than just on whole molecules. After a selection has been created, it can be modified (rotated, translated), different properties, such as occupancy and beta factors, can be set, and the modified selection can be saved as a file.
 
@@ -134,6 +138,8 @@ $sel move [trans axis x 30]
 Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
 
 ![Cis- and trans- isomers of lutein]({{ page.root }}/fig/rotation.png){:width="400"}
+
+Load the file `workshop/pdb/carotenoids/LUT.pdb`.
 ~~~
 # Select atoms to rotate
 set sel [atomselect top "not name H35 and within 1.2 of serial 1 to 21"]
@@ -150,19 +156,20 @@ $sel move [trans bond $AC1 $AC2 180 deg]
 
 [lindex](https://www.tcl.tk/man/tcl8.6/TclCmd/lindex.html) is a builtin Tcl command. It retrieves an element from a list.
 
-### Aligning molecules
+### Superposing molecules
 Although VMD has GUI tool for aligning molecules, it is limited for molecules where lists of equivalent atoms can be constructed using the same selections command. This means that molecules must have either same atom names or same order of atoms. Often this is not the case. For example you may want to align several structurally similar ligands, or two homologous proteins that do not have exactly the same sequence.  
 
 With Tcl commands you can construct two independent lists of equivalent atoms and then use them for aligning molecules. The command for generating transformation matrices is `measure fit`. It creates transformation matrix for aligning two atom selections.
 
-As an example, let's consider two carotenoid molecules: lutein [LUT.pdb](https://www.rcsb.org/ligand/LUT) and lycopene [LYC.pdb](https://www.rcsb.org/ligand/LYC).
+As an example, let's consider two carotenoid molecules: lutein [LUT](https://www.rcsb.org/ligand/LUT) and lycopene [LYC](https://www.rcsb.org/ligand/LYC).
+
+PDB files of these molecules are in the directory `workshop/pdb/carotenoids/`. 
 
 The following code assumes that ID of the reference molecule is 0 and ID of the molecule that we want to move is 1, so make sure you use the right molecule IDs.
 
 As these molecules have same polyene chains, but different end groups we will use middle part of molecules to align them. 
 
 ![Cis- and trans- isomers of lutein]({{ page.root }}/fig/superposition.png){:width="600"}
-
 
 VMD will reorder both selections by index in the ascending order, so if the order of the selected atoms in the reference molecule is not the same as in the fit molecule you'll need to reorder them. 
 
@@ -175,7 +182,6 @@ Example:
 fitmol   C18 C19 C20 C21 C50 C52  
 refmol   C20 C14 C15 C35 C34 C40  
 order      2   0   1   4   3   5  
-
 
 ~~~
 set fitmol [atomselect 1 "name C18 C19 C20 C21 C50 C52"] 
@@ -202,7 +208,10 @@ for {set i 0} {$i < 200} {incr i} {scale by 0.99; display update}
 ~~~
 {: .vmd}
 
-
+>## Animate cis-trans transition of a lutein molecule
+> Create a loop that animates lutein's cis-trans transition. You can use the rotation code that we developed above.
+>
+{: .challenge}
 
 ### Making input files for NAMD.
 NAMD uses beta and occupancy fields of PDB files as an input for various types of calculations. 
@@ -225,7 +234,7 @@ $selAll writepdb "constraints.pdb"
 {: .vmd}
 
 
-### Measuring distances between atoms vs time
+### Measuring distances between atoms vs. time
 #### Measuring distance between a pair of atoms
 Go to the directory with example MD data:
 ~~~

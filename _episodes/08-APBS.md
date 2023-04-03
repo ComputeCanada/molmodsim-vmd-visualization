@@ -1,15 +1,11 @@
 ---
 title: "Continuum Electrostatics Calculations"
-teaching: 20
+teaching: 10
 exercises: 0
 questions:
-- "How to use sequence viewer?"
-- "How to calculate RMSD between molecules? "
-- "How to make trajectory movies?"
-- "How to visualize electrostatic potential?"
-- "How to make photorealistic pictures?"
+- "How to compute and visualize electrostatic potential?"
 objectives:
-- "Learn some commonly used VMD extensions"
+- "How to use APBS electrostatics plugin?"
 keypoints:
 - ""
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Visualizing Volumetric Data"
 teaching: 20
-exercises: 0
+exercises: 5
 questions:
 - "How to visualize volumetric data?"
 objectives:
@@ -15,7 +15,7 @@ keypoints:
 VMD has the ability to compute and display volumetric data. Volumetric data sets represent parameters whose values depend on their location in 3D, such as density, potential or solvent accessibility. Volumetric datasets store data as 3-D grids. Volumetric data can be visualized by VMD as slices, as isosurfaces, or by using volumetric data to color objects. Plugins for creating and analyzing volumetric data are also available in VMD.
 
 ### Creating density maps 
-Let's use the file workshop/bcl2-1.pdb
+Let's use the file workshop/pqr/bcl2-1.pdb
 
 Load this file and compute density map using `Volmap Tool`:
 1. Go to `Extensions`-->`Analysis`-->`Volmap Tool`
@@ -37,7 +37,7 @@ Make slices for the x- and z-directions as well, and rotate you view with the mo
 ![](../fig/volSlice.png){:width="480"}
 
 ### Using isosurfaces to visualize volume
-For 3D way of representing the volumetric data follow the following steps:
+For 3D surface representation of the volumetric data follow the following steps:
 
 Create a new representation using the `Isosurface` drawing method. 
 
@@ -52,7 +52,7 @@ Select `isovalue 0.1`, and change material to `GlassBubble`. Then create another
 ### Coloring objects by volumetric data
 Another common way to represent volumetric data is by coloring other representations based on it. For example you can color molecular surface by electrostatic potential.
 
-- As an example we will use electrostatic potential saved in file `bcl2-1_pot.dx`
+- As an example we will use electrostatic potential saved in file `workshop/pqr/bcl2-1_pot.dx`
 
 To prepare potential file from the pdb file I first used [pdb2pqr](https://server.poissonboltzmann.org) web server to prepare pdb file with charges and radii needed for calculation of electrostatic potential. Then I used `APBS Electrostatics` VMD plugin to compute electrostatic potential around RNA molecule. I will discuss these calculations in detail later. For now we will simply use precomputed potential file as a visualization example. 
 
@@ -69,15 +69,20 @@ The electron density map represents the fit between the structural model  and ex
 
 Electron density maps calculated using the program DCC can be downloaded in DSN6 format from Structure Summary pages.
 
-Example PDB file is 4G6U. 
+Example PDB file is 7xcq. 
 - Download two files:
-    - [4g6u.pdb](https://files.rcsb.org/download/4G6U.pdb) and
-    - [2fo-fc Map (DSN6)](https://edmaps.rcsb.org/maps/4g6u_2fofc.dsn6). 
+    - [7xcq.pdb](https://files.rcsb.org/download/7xcq.pdb) and
+    - [7xcq_2fo-fc.dsn6 Map (DSN6)](https://edmaps.rcsb.org/maps/7xcq_2fofc.dsn6). 
 
-- Load 4g6u.pdb and then load 4g6u_2fofc.dsn6 data into the 6g4u molecule.
-- Create isosurface representation and adjust the isovalue slider to a value around 1.0.
+- Load 7xcq.pdb and then load 7xcq_2fo-fc.dsn6 map into the 7xcq molecule.
+- Create isosurface representation and set the isovalue to 1.0.
 
 The volume map is too big, so the figure is very busy. By focusing on a small area of interest, visualization can be significantly improved. When choosing regions of interest in volumetric data, VMD provides two options.
+
+|------------------------|-------------------|-------------------|
+|:----------------------:|:-----------------:|:-----------------:|
+| ![](../fig/7xcq-d1.png) Whole Map | ![](../fig/7xcq-d2.png) Clipping planes | ![](../fig/7xcq-d3.png) Volime Tool | 
+
 
 #### Clip Tool
 Clipping planes allow for the slicing of a 3D model along a plane. Each molecule can have up to 6 different clipping planes, which can independently be set on or off. 
@@ -85,7 +90,7 @@ Clipping planes allow for the slicing of a 3D model along a plane. Each molecule
 - To get a clear view, use clipping planes to remove volume in front of and behind your region of interest. `Clipping Plane Tool` is under `Extensions`->`Visualization`.  
 - Check `Normal follows view` box to orient clipping planes perpendicular to the view direction.  
 
-![](../fig/eldens.png){:width="480"}
+Let's focus on the HEM. The first step is to orient it in the plane of the screen. Then in the clipping plane tool check the box `Normal follows view` and activate two clipping planes. Uncheck `Normal follows view`, rotate the molecule to look at the HEM from its side and adjust positions of the clipping planes.
 
 #### Volume Tool
 [Volume Tool](https://www.ks.uiuc.edu/Research/vmd/vmd-1.9.4/ug/node158.html) 
@@ -96,5 +101,30 @@ voltool mask <selection> -mol <molID> -vol <volID> -cutoff <cutoff distance>
 ~~~
 {: .vmd}
 
+The voltool operates on selections of atoms, so we need to create a selection. You can make selections by creating a graphical representation. Let's make a representation showing HEM (resname HEM). 
+
+How do we use this representation in the command?
+~~~
+atomselect list
+~~~
+{: .vmd}
+Will print all available selections.
+
+You may have more than one selection, so let's confirm that atomselect0 is the selection we want:
+~~~
+atomselect0 text
+~~~
+{: .vmd}
+Will print the selection text.
+
+As you might imagine, the atomselect command can also make selections. We'll learn how to make selections with this command later. For now let's just use the selection we already have.  
+~~~
+voltool mask atomselect0 -mol 1
+~~~
+{: .vmd}
+>## Selecting an area of interest with voltool
+>Visualize electron density around TYR103, or any other residue using voltool.
+>
+{: .challenge}
 
 {% include links.md %}
