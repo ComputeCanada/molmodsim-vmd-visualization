@@ -21,10 +21,11 @@ LINUX USERS:
 1. Install TigerVNC viewer
     - Ubuntu: sudo apt update && sudo apt install vncviewer
     - CentOS: sudo yum install tigervnc
-2. Install [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD)
+2. Install [VMD](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD). 
+    - RTX RTRT build is recommended for Linux users with Nvidia GPUs because it provides real-time ray tracing display mode.
 
 If you don't already have a source code editor, install one. VSCode, Atom, and Notepad++ are good choices.
 
-For encoding movies install FFMPEG [Windows](https://phoenixnap.com/kb/ffmpeg-windows), [Linux](https://www.tecmint.com/install-ffmpeg-in-linux/), [MacOS](https://phoenixnap.com/kb/ffmpeg-mac)
+For encoding movies install FFMPEG. Here are the links to the installation instructions for [Windows](https://phoenixnap.com/kb/ffmpeg-windows), [Linux](https://www.tecmint.com/install-ffmpeg-in-linux/), [MacOS](https://phoenixnap.com/kb/ffmpeg-mac)
 
 {% include links.md %}
