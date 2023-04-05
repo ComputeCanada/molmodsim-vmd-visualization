@@ -2,7 +2,7 @@
 title: Setup
 ---
  
-#### Download [workshop data](https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop.tar.gz)
+#### Download [workshop data](https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_2023.tar.gz)
 
 #### Install software
 WINDOWS USERS.
