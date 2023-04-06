@@ -15,9 +15,26 @@ keypoints:
 
 ## Introducing VMD commands
 ### Starting VMD in text mode.
-The VMD program can also be used in text mode. Everything you can do in VMD interactively can also be done with commands and scripts. In text mode you interact with VMD using commands. The command-line interface is more flexible than GUI and it allows VMD to read commands from script files. With commands, you can use options than are not available in GUI, and you can run VMD non-interactively. Command-line access to VMD functions is very useful in HPC environment for batch jobs. The text mode is typically used for analyzing MD simulations and rendering animations. 
 
+{: .instructor_notes} 
+The VMD program can also be used in text mode. Everything you can do in VMD interactively can also be done with commands and scripts. In text mode you interact with VMD using commands. The command-line interface is more flexible than GUI and it allows VMD to read commands from script files. With commands, you can use options than are not available in GUI, and you can run VMD non-interactively. Command-line access to VMD functions is very useful in HPC environment for batch jobs. The text mode is typically used for analyzing MD simulations and rendering animations. 
+{: .instructor_notes} 
+
+{: .instructor_notes} 
 How to start vmd in text mode? If graphical display is not available VMD will automatically fallback into text mode. When you are running analysis scripts on a system with graphical display you may want to enforce text mode to prevent VMD from opening GUI. To do so start vmd with the option `-dispdev text`.  
+{: .instructor_notes} 
+
+{: .self_study_text}
+- The command-line interface 
+  - is more flexible than GUI
+  - allows VMD to read commands from script files. 
+  - offers options than are not available in GUI
+
+{: .self_study_text}
+To start vmd in text mode use the option `-dispdev text`.  
+{: .self_study_text}
+
+{: .self_study_text}
 
 ### Entering commands
 Commands can be entered in two ways: 

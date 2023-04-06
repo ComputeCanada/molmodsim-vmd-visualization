@@ -252,7 +252,7 @@ A883:P, Na+966:Na+
 
 ~~~
 mol new prmtop_nowat.parm7
-mol addfile mdcrd_nowat.xtc
+mol addfile mdcrd_nowat.xtc step 5 waitfor all
 set file [open "distance.csv" w]
 puts $file "Time (ns), Distance (A)"
 set nf [molinfo top get numframes]
@@ -269,7 +269,7 @@ close $file
 {: .vmd}
 
 #### Plotting data with Gnuplot
-Start Gnuplot by typing gnuplot. Then it gnuplot command prompt enter the following commands:
+Start Gnuplot by typing gnuplot. Then in gnuplot command prompt enter the following commands:
 
 ~~~
 set xlabel "Time (ns)"
@@ -285,7 +285,7 @@ Measure distance between centers of mass of protein and nucleic acids
 
 ~~~
 mol new prmtop_nowat.parm7
-mol addfile mdcrd_nowat.xtc waitfor all
+mol addfile mdcrd_nowat.xtc step 5 waitfor all
 set file [open "distance.csv" w]
 puts $file "Time (ns), Distance (A)"
 set nf [molinfo top get numframes]

@@ -41,7 +41,7 @@ For 3D surface representation of the volumetric data follow the following steps:
 
 Create a new representation using the `Isosurface` drawing method. 
 
-In the Draw menu, select Solid Surface. 
+In the Draw menu, select `Solid Surface`. 
 
 Now, you can see a surface of constant volumetric value, chosen using the Isovalue slider. As you choose higher values, you see the surface shrinks down around a core where the most average mass was located. 
 

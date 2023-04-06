@@ -157,13 +157,13 @@ It is better to eliminate translational/rotational motions before making an anim
 #### Encoding movies with ffmpeg
 - MPEG-2 I-frame only Highest Quality Encoding
 ~~~
-ffmpeg -start_number -i %d.ppm -vcodec mpeg2video -pix_fmt yuv420p -q:v 1 -an  movie.m2v
+ffmpeg -start_number <first_frame> -i %d.ppm -vcodec mpeg2video -pix_fmt yuv420p -q:v 1 -an  movie.m2v
 ~~~
 {: .language-bash}
 
 - H.264 I-frame only Highest Quality Encoding
 ~~~
-ffmpeg -start_number -i %d.ppm -vcodec libx264 -pix_fmt yuv420p -crf 18 -s 1080x720 -preset veryslow movie.mp4
+ffmpeg -start_number <first_frame>  -i %d.ppm -vcodec libx264 -pix_fmt yuv420p -crf 18 -s 1080x720 -preset veryslow movie.mp4
 ~~~
 {: .language-bash}
 

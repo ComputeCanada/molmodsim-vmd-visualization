@@ -17,14 +17,14 @@ keypoints:
 On the training cluster:
 ~~~
 cd ~/scratch
-cp /tmp/workshop.tar.gz .
-tar -xf workshop.tar.gz 
+cp /tmp/workshop_2023.tar.gz .
+tar -xf workshop_2023.tar.gz 
 ~~~
 {: .language-bash}
 
 On any other computer:
 ~~~
-curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop.tar.gz
+curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_2023.tar.gz
 ~~~
 {: .language-bash}
 
@@ -40,7 +40,7 @@ It is best to use structure files that contain connectivity information whenever
 As an example, open `Tk Console` and run the following commands to load the file 7xcq.pdb without automatic bond determination:
 
 ~~~
-cd ~/workshop/pdb/7XCQ/
+cd ~/scratch/workshop/pdb/7XCQ/
 mol new 7xcq.pdb autobonds off
 ~~~
 {: .vmd}
@@ -125,6 +125,8 @@ The `RMSD calculator` is similar to the `RMSD Trajectory Tool`, but it calculate
 >1. Compute RMSD of two molecules: PDB ID 1si4 and 4n7n. For the calculation, use only chain A backbone atoms.
 >2. When all chain A residues are used for alignment, why does the alignment fail?
 >3. Can you think of a way to include all backbone atoms present in both proteins in the alignment? 
+>
+> If you need to download pdb files use: `wget https://files.rcsb.org/download/4n7n.pdb`
 >
 >>## Solution
 >> 1. Use the atom selection: `chain A and resid 1 to 140`, and check box `Backbone only` for both alignment and RMSD calculation, RMSD = 0.92558

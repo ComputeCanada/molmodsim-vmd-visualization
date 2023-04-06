@@ -164,7 +164,14 @@ Labels can quickly clutter display. How to delete or hide Labels when you don't 
 - Deleting labels: `Graphics` --> `Labels` --> `Delete`
 
 >## Challenge
->Reproduce the following figure. In this image we see chain A of the pdb entry 1SI4 . The figure shows protein, residue HEM, atom FE, and HEM ligands (residues HIS, CYN). 
+>Reproduce the following figure. In this image we see chain A of the pdb entry 1SI4.
+> 
+>The figure shows:  
+>- protein (new cartoon)
+>- residue HEM (orange licorice)
+>- HEM atom FE (red CPK)
+>- HEM ligand residue HIS (yellow licorice) 
+>- HEM ligand residue CYN (yellow VDW). 
 >
 >![Hemoglobin protein with ligand]({{ page.root }}/fig/hemoglobin.png){: width="480"}
 > Use the following selection keywords: `chain`, `name`, `resname`, `same residue as within`. You will also need to use logical operators `and`, `not`. 
