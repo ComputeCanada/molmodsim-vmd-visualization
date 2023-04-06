@@ -24,17 +24,19 @@ module load StdEnv/2020 cuda vmd
 vmd
 ~~~
 {: .language-bash}
-### Starting VMD on Windows
+#### Starting VMD on Windows
 Use the VMD desktop launcher. 
 
+**Important:** On Windows VMD starts in the installation directory. Users don't have permission to write in this directory, so to begin using VMD **change to your home directory**. You can do it by typing `cd` in the `VMD command window`.
+
+#### VMD user interface
 Three windows will open: 
 - `VMD OpenGL Display`, display and interact with molecules
 - `VMD Main`, work with molecules and trajectories, start interfaces and extensions 
 - `VMD command window`, show info and run text commands
 
-**Important:** On Windows VMD starts in the installation directory. Users don't have permission to write in this directory, so to begin using VMD **change to your home directory**. You can do it by typing `cd` in the `VMD command window`.
-
 ### Working with PDB files
+
 As an example will be using X-ray crystallographic structure of human hemoglobin 1SI4.
 
 ####  Downloading files from Protein Data Bank
