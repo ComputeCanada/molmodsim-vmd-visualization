@@ -15,7 +15,7 @@ keypoints:
 VMD has the ability to compute and display volumetric data. Volumetric data sets represent parameters whose values depend on their location in 3D, such as density, potential or solvent accessibility. Volumetric datasets store data as 3-D grids. Volumetric data can be visualized by VMD as slices, as isosurfaces, or by using volumetric data to color objects. Plugins for creating and analyzing volumetric data are also available in VMD.
 
 ### Creating density maps 
-Let's use the file workshop/pqr/bcl2-1.pdb
+Let's use the file `workshop_vmd/example_03/bcl2-1.pdb`
 
 Load this file and compute density map using `Volmap Tool`:
 1. Go to `Extensions`-->`Analysis`-->`Volmap Tool`
@@ -52,7 +52,7 @@ Select `isovalue 0.1`, and change material to `GlassBubble`. Then create another
 ### Coloring objects by volumetric data
 Another common way to represent volumetric data is by coloring other representations based on it. For example you can color molecular surface by electrostatic potential.
 
-- As an example we will use electrostatic potential saved in file `workshop/pqr/bcl2-1_pot.dx`
+- As an example we will use electrostatic potential saved in the file `workshop_vmd/example_03/bcl2-1_pot.dx`
 
 To prepare potential file from the pdb file I first used [pdb2pqr](https://server.poissonboltzmann.org) web server to prepare pdb file with charges and radii needed for calculation of electrostatic potential. Then I used `APBS Electrostatics` VMD plugin to compute electrostatic potential around RNA molecule. I will discuss these calculations in detail later. For now we will simply use precomputed potential file as a visualization example. 
 
@@ -73,6 +73,8 @@ Example PDB file is 7xcq.
 - Download two files:
     - [7xcq.pdb](https://files.rcsb.org/download/7xcq.pdb) and
     - [7xcq_2fo-fc.dsn6 Map (DSN6)](https://edmaps.rcsb.org/maps/7xcq_2fofc.dsn6). 
+
+The files are available in the folder `workshop_vmd/example_04`
 
 - Load 7xcq.pdb and then load 7xcq_2fo-fc.dsn6 map into the 7xcq molecule.
 - Create isosurface representation and set the isovalue to 1.0.
@@ -105,7 +107,7 @@ The voltool operates on selections of atoms, so we need to create a selection. Y
 
 How do we use this representation in the command?
 ~~~
-atomselect list
+atomselect top "resname HEM"
 ~~~
 {: .vmd}
 Will print all available selections.
@@ -115,11 +117,10 @@ You may have more than one selection, so let's confirm that atomselect0 is the s
 atomselect0 text
 ~~~
 {: .vmd}
-Will print the selection text.
 
-As you might imagine, the atomselect command can also make selections. We'll learn how to make selections with this command later. For now let's just use the selection we already have.  
+Visualize electron density around HEM:
 ~~~
-voltool mask atomselect0 -mol 1
+voltool mask atomselect0 -mol 0 -vol 0 -cutoff 3
 ~~~
 {: .vmd}
 >## Selecting an area of interest with voltool

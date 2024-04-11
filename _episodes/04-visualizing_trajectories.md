@@ -17,14 +17,14 @@ keypoints:
 On the training cluster:
 ~~~
 cd ~/scratch
-cp /tmp/workshop_2023.tar.gz .
-tar -xf workshop_2023.tar.gz 
+cp /tmp/workshop_vmd_2024.tar.gz .
+tar -xf workshop_vmd_2024.tar.gz 
 ~~~
 {: .language-bash}
 
 On any other computer:
 ~~~
-curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_2023.tar.gz
+curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_vmd_2024.tar.gz
 ~~~
 {: .language-bash}
 
@@ -40,21 +40,21 @@ It is best to use structure files that contain connectivity information whenever
 As an example, open `Tk Console` and run the following commands to load the file 7xcq.pdb without automatic bond determination:
 
 ~~~
-cd ~/scratch/workshop/pdb/7XCQ/
+cd ~/scratch/workshop_vmd/example_01
 mol new 7xcq.pdb autobonds off
 ~~~
 {: .vmd}
 
 Delete all the molecules or restart vmd.
 
-Our training simulation dataset is located in the directory `workshop/pdb/6N4O/simulation/sim_pmemd/4-production`. As a structure file we will be using AMBER7 parameter file `prmtop_nowat.parm7`. Change into this directory and load the topology file.
+Our training simulation dataset is located in the directory `workshop_vmd/example_02`. As a structure file we will be using AMBER7 parameter file `prmtop_nowat.parm7`. Change into this directory and load the topology file.
 
 Once a molecular structure has been loaded you can add a trajectory to it: highlight the molecule, go to `File`->`Load Data into Molecule` and choose `mdcrd_nowat.xtc`. It is a long trajectory with 3000 frames. To make loading faster load every 5th frame.
 
 >## Loading trajectory using commands on the training cluster
 >
 >~~~
->cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
+>cd ~/scratch/workshop_vmd/example_02
 >mol new prmtop_nowat.parm7
 >mol addfile mdcrd_nowat.xtc step 5
 >~~~

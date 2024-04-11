@@ -20,7 +20,7 @@ keypoints:
 Open a terminal: 
 `Applications` --> `System Tools` --> `Mate Terminal`
 ~~~
-module load StdEnv/2020 cuda vmd
+module load StdEnv/2023 vmd
 vmd
 ~~~
 {: .language-bash}
@@ -65,7 +65,7 @@ Load a second molecule (you can use the same pdb file), and make sure you have t
 
 VMD shows information about loaded molecules in its main window. This window displays: 
 - molecule ID 
-- molecule status
+- molecule status [T A D F]
 - molecule name 
 - number of atoms
 - number of trajectory frames
@@ -115,6 +115,7 @@ Rotate, zoom in/out, translate, and set rotation center to get a desired view. P
 ##### Creating and modifying graphical representations
 In the `Graphical representations` window you can create representations for selected atoms, choose drawing styles and coloring methods
 
+- Ensure 1si4.pdb is loaded
 - Navigate to `Graphics` --> `Representations` 
 - Change `Drawing Method` to `New Cartoon`   
 - Change `Coloring Method` to `Chain`

@@ -99,7 +99,7 @@ The `Movie Maker` extension offers several types of animations. You can make a m
 FFmpeg is a powerful tool that can be used to encode videos with high quality codecs. If you haven’t already installed FFmpeg, you can download and install it from [here](https://www.ffmpeg.org/download.html). FFmpeg is already installed on clusters, so you only need to load it.
 
 ~~~
-module load vmd ffmpeg
+module load StdEnv/2020 vmd ffmpeg
 vmd
 ~~~
 {: .language-bash}
@@ -113,7 +113,7 @@ Standard options in movie maker are fairly limited. It will simply rotate a mole
 - In the `Movie durations (seconds)` box enter 10
 - Press `Make movie`
 
-For a trajectory movie duration is defined by the number of frames and trajectory step size. So for 3140 frames with stepsize 2 durarion is 3140/(24*2)=65 sec.
+For a trajectory movie duration is defined by the number of frames and trajectory step size. So for 3140 frames with stepsize 2 durarion is 3140/(24fps*2)=65 sec.
 
 ### Making movies with Tcl scripts
 With a custom animation script you have full control of camera movements and special effects such as adding glow lights to some atoms, drawing geometrical figures, slicing volume data, etc. 

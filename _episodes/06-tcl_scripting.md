@@ -28,22 +28,22 @@ Rotating or translating molecule that we have done so far simply changes viewpoi
 
 Many VMD commands operate on selected groups of atoms rather than just on whole molecules. After a selection has been created, it can be modified (rotated, translated), different properties, such as occupancy and beta factors, can be set, and the modified selection can be saved as a file.
 
-As an example, let's select heavy atoms of the protein backbone:
+As an example, let's load `1si4.pdb` and select protein backbone:
 ~~~
-set sel [atomselect top "noh backbone and protein"]
+set sel [atomselect top "backbone"]
 ~~~
 {: .vmd}
 If command is successful VMD responds with a name of the created selection function:
 ~~~
-atomselect1
+atomselect0
 ~~~
 {: .output}
 In your case, the number of the function may be different, depending on how many selections have already been made.
 
-With this command we created a function for selecting atoms, and set a variable `sel` to point to it. `sel` is just the name of this variable, you can use any name you wish. You can think of the variable `sel` as a shortcut to `atomselect1`. Thus, `atomselect1` is equivalent to `$sel`. 
+With this command we created a function for selecting atoms, and set a variable `sel` to point to it. `sel` is just the name of this variable, you can use any name you wish. You can think of the variable `sel` as a shortcut to `atomselect0`. Thus, `atomselect0` is equivalent to `$sel`. 
 
 ### Working with selections
-What commands are available for `atomselect1`? To get help on commands available for the function `atomselect1` type `atomselect1` or `$sel`.
+What commands are available for `atomselect0`? To get help on commands available for the function `atomselect0` type `atomselect0` or `$sel`.
 
 Try using some of the commands:
 ~~~
@@ -58,10 +58,10 @@ set sel [atomselect top "resname CYS and name CA"]
 ~~~
 {: .vmd}
 ~~~
-atomselect2
+atomselect1
 ~~~
 {: .output}
-This command resets the variable `sel`. After this command is executed `sel` points to `atomselect2`. This can be verified by displaying the selection text:
+This command resets the variable `sel`. After this command is executed `sel` points to `atomselect1`. This can be verified by displaying the selection text:
 ~~~
 $sel text
 ~~~
@@ -70,7 +70,7 @@ $sel text
 resname CYS and name CA
 ~~~
 {: .output}
-What happened to `atomselect1`? As you may have thought, `atomselect1` as well as any other previously created selections still exist:
+What happened to `atomselect0`? As you may have thought, `atomselect0` as well as any other previously created selections still exist:
 ~~~
 atomselect list 
 ~~~
@@ -99,7 +99,7 @@ We can manipulate any other attribute of the selection!
 ### Viewing selections 
 To show a selection in graphical window we first need to choose a drawing method for a new representation and then add the new representation to the molecule:
 ~~~
- mol selection [$sel text]
+ mol selection "resname CYS"
  mol representation vdw
  mol addrep top
 ~~~
@@ -113,7 +113,7 @@ $sel moveby {0 50 0}
 {: .vmd}
 
 #### Complex transformations (rotate + translate)
-The `move` command takes as an argument a [4x4] transformation matrix and applies it to the coordinates of each atom in the selection. A transformation matrix is computed from [3x3] rotation matrix and a translation vector. It is not straightforvard to obtain it by hand. VMD has various commands to help creating transformation matrices. 
+The `move` command takes as an argument a [4x4] transformation matrix and applies it to the coordinates of each atom in the selection. A transformation matrix is computed from [3x3] rotation matrix and a translation vector. It is not straightforward to obtain it by hand. VMD has various commands to help creating transformation matrices. 
 
 The main command for generating transformation matrices is `trans`. It can create matrices for many transformations such as:
 - centering a molecule
@@ -139,10 +139,11 @@ Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
 
 ![Cis- and trans- isomers of lutein]({{ page.root }}/fig/rotation.png){:width="400"}
 
+Load the file `workshop_vmd/example_05/LUT-noh.pdb`
 Load the file `workshop/pdb/carotenoids/LUT.pdb`.
 ~~~
 # Select atoms to rotate
-set sel [atomselect top "not name H35 and within 1.2 of serial 1 to 21"]
+set sel [atomselect top "serial 1 to 21"]
 # Select rotation axis atoms
 set A1 [atomselect top "name C15"]
 set A2 [atomselect top "name C35"]
@@ -156,7 +157,7 @@ $sel move [trans bond $AC1 $AC2 180 deg]
 
 [lindex](https://www.tcl.tk/man/tcl8.6/TclCmd/lindex.html) is a builtin Tcl command. It retrieves an element from a list.
 
-### Superposing molecules
+### Superposing molecules (more challenging)
 Although VMD has GUI tool for aligning molecules, it is limited for molecules where lists of equivalent atoms can be constructed using the same selections command. This means that molecules must have either same atom names or same order of atoms. Often this is not the case. For example you may want to align several structurally similar ligands, or two homologous proteins that do not have exactly the same sequence.  
 
 With Tcl commands you can construct two independent lists of equivalent atoms and then use them for aligning molecules. The command for generating transformation matrices is `measure fit`. It creates transformation matrix for aligning two atom selections.
@@ -238,7 +239,7 @@ $selAll writepdb "constraints.pdb"
 #### Measuring distance between a pair of atoms
 Go to the directory with example MD data:
 ~~~
-cd ~/scratch/workshop/pdb/6N4O/simulation/sim_pmemd/4-production
+cd ~/scratch/workshop_vmd/example_02
 ~~~
 {: .language-bash}
 
@@ -274,7 +275,7 @@ Start Gnuplot by typing gnuplot. Then in gnuplot command prompt enter the follow
 ~~~
 set xlabel "Time (ns)"
 set ylabel "Distance, (A)"
-plot "dist_P-Na+.csv"  with lines
+plot "distance.csv"  skip 1 with lines
 ~~~
 
 #### Measuring distances between groups of atoms
