@@ -18,15 +18,27 @@ keypoints:
 ---
 
 ## Tcl Scripting in VMD
+
 In addition to commands, VMD offers the built-in Tcl programming language. VMD Tcl scripts can help you investigate molecule properties and perform analysis.
+{: .instructor_notes}
 
 ### Tcl language
-Tcl is shortened form of Tool Command Language. This language combines scripting with an interpreter that gets embedded in the application. There are embedded Tcl interpreters in both VMD and NAMD. Tcl interpreter available from the command-line allows you to write data processing and visualization scripts utilizing any existing VMD functions and variables. For example, you have access to all information about loaded molecules such as coordinates, atom names, occupancy, and charge. 
+Tcl is shortened form of Tool Command Language. This language combines scripting with an interpreter that gets embedded in the application. There are embedded Tcl interpreters in both VMD and NAMD. Tcl interpreter available from the command-line allows you to write data processing and visualization scripts utilizing any existing VMD functions and variables. For example, you have access to all information about loaded molecules such as coordinates, atom names, occupancy, and charge.
+{: .instructor_notes}
+
+- Tcl interpreter is embedded in both VMD and NAMD.
+{: .self_study_text}
 
 ### Selecting atoms
+
 Rotating or translating molecule that we have done so far simply changes viewpoint. It does not change coordinates of the loaded molecules. In your work you may want to rotate or translate a molecule and save its modified coordinates. It may be useful for example if you want to prepare a simulation system containing several copies of a molecule prepared from one structure file.  
+{: .instructor_notes}
 
 Many VMD commands operate on selected groups of atoms rather than just on whole molecules. After a selection has been created, it can be modified (rotated, translated), different properties, such as occupancy and beta factors, can be set, and the modified selection can be saved as a file.
+{: .instructor_notes}
+
+- VMD commands operate on selected groups of atoms
+{: .self_study_text}
 
 As an example, let's load `1si4.pdb` and select protein backbone:
 ~~~
@@ -38,12 +50,16 @@ If command is successful VMD responds with a name of the created selection funct
 atomselect0
 ~~~
 {: .output}
+
 In your case, the number of the function may be different, depending on how many selections have already been made.
 
 With this command we created a function for selecting atoms, and set a variable `sel` to point to it. `sel` is just the name of this variable, you can use any name you wish. You can think of the variable `sel` as a shortcut to `atomselect0`. Thus, `atomselect0` is equivalent to `$sel`. 
+{: .instructor_notes}
 
 ### Working with selections
-What commands are available for `atomselect0`? To get help on commands available for the function `atomselect0` type `atomselect0` or `$sel`.
+
+What commands are available for `atomselect0`? 
+- To get help on commands available for the function `atomselect0` type `atomselect0` or `$sel`.
 
 Try using some of the commands:
 ~~~
@@ -70,7 +86,11 @@ $sel text
 resname CYS and name CA
 ~~~
 {: .output}
-What happened to `atomselect0`? As you may have thought, `atomselect0` as well as any other previously created selections still exist:
+What happened to `atomselect0`?
+
+As you may have thought, `atomselect0` as well as any other previously created selections still exist:
+{: .instructor_notes}
+
 ~~~
 atomselect list 
 ~~~
@@ -82,7 +102,11 @@ atomselect0 delete
 {: .vmd}
 
 ### Changing properties of selected atoms
-We have selected CA atoms of all CYS residues of the protein. Let's do something useful with this selection: find out how may CYS residues are in our protein and what are their ID numbers:
+
+We have selected CA atoms of all CYS residues of the protein. Let's do something useful with this selection: 
+{: .instructor_notes}
+
+Find out how may CYS residues are in our protein and what are their ID numbers:
 ~~~
 set cys [$sel get resid] # make a list of CYS resid numbers
 llength $cys # count the number of elements in the list
@@ -113,7 +137,13 @@ $sel moveby {0 50 0}
 {: .vmd}
 
 #### Complex transformations (rotate + translate)
+
 The `move` command takes as an argument a [4x4] transformation matrix and applies it to the coordinates of each atom in the selection. A transformation matrix is computed from [3x3] rotation matrix and a translation vector. It is not straightforward to obtain it by hand. VMD has various commands to help creating transformation matrices. 
+{: .instructor_notes}
+
+- The `move` command takes as an argument a [4x4] transformation matrix
+{: .self_study_text}
+
 
 The main command for generating transformation matrices is `trans`. It can create matrices for many transformations such as:
 - centering a molecule
@@ -125,6 +155,7 @@ The main command for generating transformation matrices is `trans`. It can creat
 Click [here](https://www.ks.uiuc.edu/Research/vmd/current/ug/node194.html) for more details about matrix routines. 
 
 Let's consider examples of some useful transformations. 
+{: .instructor_notes}
 
 #### Rotation around an axis
 Rotate a molecule around x-axis by 30 degrees:
@@ -135,12 +166,11 @@ $sel move [trans axis x 30]
 {: .vmd}
 
 #### Rotation around a bond
-Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
+- Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
 
 ![Cis- and trans- isomers of lutein]({{ page.root }}/fig/rotation.png){:width="400"}
 
 Load the file `workshop_vmd/example_05/LUT-noh.pdb`
-Load the file `workshop/pdb/carotenoids/LUT.pdb`.
 ~~~
 # Select atoms to rotate
 set sel [atomselect top "serial 1 to 21"]
@@ -158,21 +188,31 @@ $sel move [trans bond $AC1 $AC2 180 deg]
 [lindex](https://www.tcl.tk/man/tcl8.6/TclCmd/lindex.html) is a builtin Tcl command. It retrieves an element from a list.
 
 ### Superposing molecules (more challenging)
+
 Although VMD has GUI tool for aligning molecules, it is limited for molecules where lists of equivalent atoms can be constructed using the same selections command. This means that molecules must have either same atom names or same order of atoms. Often this is not the case. For example you may want to align several structurally similar ligands, or two homologous proteins that do not have exactly the same sequence.  
+{: .instructor_notes}
 
 With Tcl commands you can construct two independent lists of equivalent atoms and then use them for aligning molecules. The command for generating transformation matrices is `measure fit`. It creates transformation matrix for aligning two atom selections.
+{: .instructor_notes}
+
+- How to align structurally similar molecules that do not have exactly the same atoms?
+{: .self_study_text}
 
 As an example, let's consider two carotenoid molecules: lutein [LUT](https://www.rcsb.org/ligand/LUT) and lycopene [LYC](https://www.rcsb.org/ligand/LYC).
 
 PDB files of these molecules are in the directory `workshop/pdb/carotenoids/`. 
 
 The following code assumes that ID of the reference molecule is 0 and ID of the molecule that we want to move is 1, so make sure you use the right molecule IDs.
+{: .instructor_notes}
 
 As these molecules have same polyene chains, but different end groups we will use middle part of molecules to align them. 
 
 ![Cis- and trans- isomers of lutein]({{ page.root }}/fig/superposition.png){:width="600"}
 
-VMD will reorder both selections by index in the ascending order, so if the order of the selected atoms in the reference molecule is not the same as in the fit molecule you'll need to reorder them. 
+Atoms in these two pdb files are not in the same order, so we need to reorder them. 
+
+Selections do not depend on the order in which you list them in the selection command. Selections follow the order in which atoms appear in input files. To solve this problem you need to provide the list describing the order in which the reference atoms should be used to match the fit molecule.
+{: .instructor_notes}
 
 Follow the following steps:
 1. list atoms in the fit molecule in the order of their index.
@@ -244,6 +284,7 @@ cd ~/scratch/workshop_vmd/example_02
 {: .language-bash}
 
 This is a simulation of argonaute protein complexed with microRNA. As an example, let's measure the distance between some RNA phosphate atoms and sodium ions attached to them.
+{: .instructor_notes}
 
 The following are some pairs you might want to consider:  
 C895:P, Na+904:Na+  
@@ -270,6 +311,12 @@ close $file
 {: .vmd}
 
 #### Plotting data with Gnuplot
+
+~~~
+module load gnuplot
+~~~
+{: .language-bash}
+
 Start Gnuplot by typing gnuplot. Then in gnuplot command prompt enter the following commands:
 
 ~~~

@@ -10,18 +10,24 @@ keypoints:
 - ""
 ---
 
-### APBS electrostatics
+## Computing electrostatic potential
 Surfaces, isosurfaces, and other representations can be colored by electrostatic potential. Any other volumetric properties such as density can be also used for coloring. Electrostatic potential calculations in VMD are done with the Adaptive Poisson-Boltzmann Solver (APBS). APBS solves the equations of continuum electrostatics for biomolecular systems. This means that it computes electrostatic potential for a solvated protein This program must be made available to VMD by loading the `apbs` module.
+{: .instructor_notes}
 
 To compute electrostatic potential we need a pqr file which is basically pdb file with charges and radii. This file can be made using PDB2PQR web server or utility programs from the `ambertools` module.
+{: .instructor_notes}
 
 Considering that we will be learning AMBER, let's use ambertools. There are two steps involved in creating pqr files from pdb files.
+{: .instructor_notes}
+
+### Create pdb file with point charges and radii
+{: .self_study_text}
 
 1. Using a force field and a pdb file, create a topology file
    ~~~
    module purge
    module load StdEnv/2020 gcc ambertools
-   cd ~/workshop/pqr
+   cd ~/scratch/workshop_vmd/example_03
    tleap -f leaprc.RNA.OL3
    ~~~
    {: .language-bash}
@@ -44,14 +50,17 @@ Considering that we will be learning AMBER, let's use ambertools. There are two 
    ~~~
    {: .leap}
 
-3. Load apbs and vmd modules
+
+### Run APBS calculations
+
+Load apbs and vmd modules
 ~~~
 module purge 
 module load StdEnv/2020 apbs vmd
 ~~~
 {: .language-bash}
 
-VMD
+Compute electrostatic potential 
 1. Load `bcl2-1.pqr.pqr` 
 2. Create a `QuickSurf` or `Surf` representation
 3. `Extensions` -> `Analysis` -> `APBS electrostatics`. Under `Edit` you can change calculation settings such as temperature, ion concentration, and dielectric constants. Then `Run APBS`

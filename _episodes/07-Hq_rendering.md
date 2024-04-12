@@ -14,8 +14,13 @@ keypoints:
 
 ### How to make 3D objects look more realistic?
 VMD is designed to generate images very fast to maximize interactivity, so in rendering in graphical window is optimized for speed. As you may have noticed by now rendered images do not look realistic, they lack 3D feel, they look flat and it is impossible to see surface profile clearly. For example, if you look at the real model of a protein with a cavity you'll see that the cavity is darker than the exposed outer surface, and becomes darker the deeper inside the cavity one goes.
+{: .instructor_notes}
  
 To simulate such effects one needs to use ray-tracing technique called `Ambient Occlusion`. The ambient occlusion technique simulates the soft shadows that should naturally occur when indirect or ambient lighting is cast out onto your scene to make 3D objects look more realistic. Another technique helping to simulate a photorealistic image is `Depth of Field` focal blur.
+{: .instructor_notes}
+
+- The ambient occlusion technique simulates realistic lightning
+{: .self_study_text}
 
 These features are not enabled by default. Let's enable ambient occlusion and depth of field focal blur:
 
@@ -37,11 +42,15 @@ VMD provides several implementations of Tachyon:
 
 #### Tachyon OptiX and Tachyon OSPRay interactive ray tracers
 Nvidia OptiX and Intel OSPRay are hardware-accelerated ray tracers capable of interactively rendering photorealistic global illumination. On Alliance systems Tachyon OptiX is available by loading `cuda` and `vmd/1.9.4a43` modules. The interactive ray tracer opens a new graphical window in which you can preview ray-traced rendering and interact with it using a mouse. When you close the interactive window the final image is saved in file. It allows only for a limited interactive functionality. You can rotate, scale, translate with a mouse, and you can turn on/off AO and DoF. It not a full-featured interactive implementation, but it is useful for improving the final rendered image.
+{: .instructor_notes}
 
 Compare normal, glsl and OptiX rendering modes.
 
 #### Real Time Ray Tracing (RTX-RTRT)
-Real Time Ray Tracing solves limitations of the Tachyon OptiX interactive ray tracer by providing full-time ray-tracing in the main OpenGL VMD window. Real Time Ray Tracing using NVidia RTX cores is supported in version 1.9.4a55 of VMD on Linux platform.  
+Real Time Ray Tracing solves limitations of the Tachyon OptiX interactive ray tracer by providing full-time ray-tracing in the main OpenGL VMD window. 
+{: .instructor_notes}
+
+Real Time Ray Tracing using NVidia RTX cores is supported in version 1.9.4a55 of VMD on Linux platform.  
 
 Installation (works on gra-vdi, siku):
 ~~~
@@ -69,6 +78,7 @@ Cons:
 
 #### Tachyon (internal) and standalone
 Despite the widespread use of hardware-accelerated Tachyon implementations today, the legacy CPU-only Tachyon implementation is preferred in some cases. Tachyon implementations using OSPay and OptiX libraries can not render representations such as lines, points, and volume slices because they are not available in standard OpenGL libraries.
+{: .instructor_notes}
 
 #### Tachyon standalone 
 The standalone version of Tachyon provides greater control over ray-tracing than the internal version. For example:
@@ -95,6 +105,7 @@ make linux-64-thr && ln -s ../compile/linux-64-thr/tachyon $INSTALLDIR
 ### Making movies
 #### Movie maker
 The `Movie Maker` extension offers several types of animations. You can make a movie of rotation of rocking a static structure, or animate a trajectory with an optional viewpoint rocking. The default compression algorithm is also a very basic quality mpeg-2 encoder optimized for speed on a single computer.  
+{: .instructor_notes}
 
 FFmpeg is a powerful tool that can be used to encode videos with high quality codecs. If you haven’t already installed FFmpeg, you can download and install it from [here](https://www.ffmpeg.org/download.html). FFmpeg is already installed on clusters, so you only need to load it.
 
@@ -105,6 +116,7 @@ vmd
 {: .language-bash}
 
 Standard options in movie maker are fairly limited. It will simply rotate a molecule or loop over all trajectory frames with a chosen step. If you want to make something more interesting such as zooming at the molecule and moving camera around it then you have to write a script.
+{: .instructor_notes}
 
 - `Extensions` -> `Visualization` -> `Movie Maker`
 - `Movie settings` -> `Rotation about Y axis`
@@ -115,21 +127,21 @@ Standard options in movie maker are fairly limited. It will simply rotate a mole
 
 For a trajectory movie duration is defined by the number of frames and trajectory step size. So for 3140 frames with stepsize 2 durarion is 3140/(24fps*2)=65 sec.
 
-### Making movies with Tcl scripts
+### Making movies with Tcl scripts (more challenging)
 With a custom animation script you have full control of camera movements and special effects such as adding glow lights to some atoms, drawing geometrical figures, slicing volume data, etc. 
 
 Much better image rendering can be done in a reasonable time on an HPC cluster. Typically you would use VMD to write scene description files of every trajectory frame for subsequent rendering with a ray tracing engine such as Tachyon. Once input files are ready you submit a script for rendering multiple frames in parallel on hundreds of CPU's. Then you encode all frames in a video with ffmpeg. Much better compression algorithms such as H.265/HEVC or Google VP9 with much higher quality settings can be used to encode an animation with `ffmpeg`.
+{: .instructor_notes}
 
-Exercise:
-Create a movie showing the diffusion of several Na+ ions. It is good to choose residues 966, 1136, 904, 903 because they display association-dissociation dynamics.
+#### Create a movie showing the diffusion of several Na+ ions
+ It is good to choose residues 966, 1136, 904, 903 because they display association-dissociation dynamics.
 
-The basic loop for making a trajectory movie must render image of each trajectory frame and save them. It is convenient to write a tcl procedure for this.
-
-Tcl procedures are defined as follows: 
-
+The basic loop for making a trajectory movie must render image of each trajectory frame and save them. It is convenient to write a tcl procedure for this. Tcl procedures are defined as follows: 
+~~~
 proc { arguments } { 
    block of code
 }
+~~~
 
 ~~~
 proc makemovie { start end } {

@@ -30,12 +30,22 @@ curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/dow
 
 ### Loading trajectory files
 A trajectory file contains the coordinates for all atoms over the course of a simulation. Normally, not every time step of the simulation is saved, since it would create a huge file. It is common to save coordinates every 1000 to 5000 steps. All of these coordinates allow us to measure the dynamic properties of our simulation experiments, including secondary-structure evolution, diffusion constants, correlations between groups, etc
+{: .instructor_notes}
+
 
 #### Loading structure files
 To load a trajectory, we need both the structure and the trajectory file. 
+{: .instructor_notes}
+
 First load a structure file as a new molecule. VMD can read structure files in different formats, such as AMBER7 Parm, XPLOR PSF, GROMACS GRO, PDB, etc.). File types are recognized by extension. If a file has a non-standard extension you can select format manually.
+{: .instructor_notes}
 
 It is best to use structure files that contain connectivity information whenever possible. Examples of file formats with connectivity are molecular topology files or mol2 files. In the absence of connectivity information, VMD uses distances between atoms to determine which ones are connected. Automatic bond determinations does not work perfectly all the time. Stretched bonds may go undetected, and there may be incorrect bonds formed between non-bonded atoms are too close to each other. If you use the wrong bonds, your visualization will be incorrect. The automatic bond determination can be disabled when loading structure files from the command line. 
+{: .instructor_notes}
+
+- To load a trajectory, we need both the structure and the trajectory file. 
+- It is best to use structure files that contain connectivity information whenever possible.
+{: .self_study_text}
 
 As an example, open `Tk Console` and run the following commands to load the file 7xcq.pdb without automatic bond determination:
 
@@ -88,8 +98,9 @@ Once a molecular structure has been loaded you can add a trajectory to it: highl
 
 ### RMSD Trajectory Analysis
 The RMSD is a numerical measurement of the difference between two structures: a target structure and a reference structure. Our interest in molecular dynamics is in how structures and parts of structures change over time. For example, a plot of RMSD vs. time will reveal the opening and closing of gates on a protein, such as a transporter. When compared with the starting point, the RMSD can identify protein structure changes and study stability of the simulated system. As the RMSD curve flattens or levels off, that can be a sign that the system has equilibrated.
+{: .instructor_notes}
 
-You can calculate the time dependence of RMSD in a molecular dynamics simulation using the RMSD Trajectory Tool. It is located under `Extensions` -> `Analysis` -> `RMSD Trajectory Tool`
+- You can calculate the time dependence of RMSD in a molecular dynamics simulation using the RMSD Trajectory Tool. It is located under `Extensions` -> `Analysis` -> `RMSD Trajectory Tool`
 
 1. Load a trajectory
 2. Start `RMSD Trajectory Tool` and add a molecule: `Add active`
