@@ -165,6 +165,8 @@ $sel move [trans axis x 30]
 ~~~
 {: .vmd}
 
+## End of workshop 2024 - 3 hours
+
 #### Rotation around a bond
 - Convert cis-lutein to trans- by rotating around the bond C15-C35 by 180 degrees.
 
