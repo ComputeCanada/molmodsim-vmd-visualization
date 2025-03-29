@@ -26,7 +26,7 @@ Considering that we will be learning AMBER, let's use ambertools. There are two 
 1. Using a force field and a pdb file, create a topology file
    ~~~
    module purge
-   module load StdEnv/2020 gcc ambertools
+   module load StdEnv/2023 ambertools
    cd ~/scratch/workshop_vmd/example_03
    tleap -f leaprc.RNA.OL3
    ~~~
@@ -53,15 +53,23 @@ Considering that we will be learning AMBER, let's use ambertools. There are two 
 
 ### Run APBS calculations
 
-Load apbs and vmd modules
+Software stack 2020: load apbs and vmd modules
 ~~~
 module purge 
 module load StdEnv/2020 apbs vmd
 ~~~
 {: .language-bash}
 
+Software stack 2023: download apbs executable and add path to APBS-3.4.1.Linux/bin
+~~~
+wget https://github.com/Electrostatics/apbs/releases/download/v3.4.1/APBS-3.4.1.Linux.zip
+unzip APBS-3.4.1.Linux.zip 
+setrpaths.sh --path APBS-3.4.1.Linux/bin
+~~~
+{: .language-bash}
+
 Compute electrostatic potential 
-1. Load `bcl2-1.pqr.pqr` 
+1. Load `bcl2-1.pqr` 
 2. Create a `QuickSurf` or `Surf` representation
 3. `Extensions` -> `Analysis` -> `APBS electrostatics`. Under `Edit` you can change calculation settings such as temperature, ion concentration, and dielectric constants. Then `Run APBS`
 4. When prompted choose `Load APBS into top molecule`
