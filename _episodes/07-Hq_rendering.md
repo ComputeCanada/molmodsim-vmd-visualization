@@ -142,7 +142,7 @@ Exercise: create a movie showing the diffusion of several Na+ ions. The result s
 {% raw %}
 <div style="margin: 40px 0; text-align: center;">
 <video controls width="80%">
-  <source src="../fig/vmdmovie.mp4">
+  <source src="https://github.com/ComputeCanada/molmodsim-vmd-visualization/releases/download/v1.0.0/movie.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 </div>
@@ -195,6 +195,7 @@ axes location off
 molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} {{{1 0 0 -60.6021} {0 1 0 -65.806} {0 0 1 -66.7616} {0 0 0 1}} {{0.905554 -0.361229 0.222479 0} {-0.130041 -0.735509 -0.664922 0} {0.403825 0.573183 -0.713014 0} {0 0 0 1}} {{0.0382264 0 0 0} {0 0.0382264 0 0} {0 0 0.0382264 0} {0 0 0 1}} {{1 0 0 -0.02} {0 1 0 -0.08} {0 0 1 0} {0 0 0 1}}}
 
 set nf [molinfo top get numframes]
+
 for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
    animate goto $i 
    display update
