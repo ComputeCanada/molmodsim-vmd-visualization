@@ -137,74 +137,133 @@ With a custom animation script you have full control of camera movements and spe
 Much better image rendering can be done in a reasonable time on an HPC cluster. Typically you would use VMD to write scene description files of every trajectory frame for subsequent rendering with a ray tracing engine such as Tachyon. Once input files are ready you submit a script for rendering multiple frames in parallel on hundreds of CPU's. Then you encode all frames in a video with ffmpeg. Much better compression algorithms such as H.265/HEVC or Google VP9 with much higher quality settings can be used to encode an animation with `ffmpeg`.
 {: .instructor_notes}
 
-Exercise: create a movie showing the diffusion of several Na+ ions. The result should look like the one below.
 
-{% raw %}
-<div style="margin: 40px 0; text-align: center;">
-<video controls width="80%">
-  <source src="https://github.com/ComputeCanada/molmodsim-vmd-visualization/releases/download/v1.0.0/movie.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-</div>
-{% endraw %}
 
-Use trajectory from example_02. It is good to select 'resid 966 1136 904 903'. These sodium ions display association-dissociation dynamics.
-
-~~~
-{% raw %}
-mol new prmtop_nowat.parm7
-mol addfile mdcrd_nowat.xtc waitfor all
-
-mol delrep 0 top
-mol selection {protein}
-mol representation NewCartoon
-mol color ColorID 8
-mol material Diffuse
-mol addrep top
-mol representation Licorice 0.200000 12.000000 12.000000
-mol addrep top
-
-mol selection {nucleic noh}
-mol representation CPK 1.600000 1.400000 12.000000 12.000000
-mol color Charge
-mol material AOShiny
-mol addrep top
-
-mol selection {resid 966 1136 904 903}
-mol representation VDW
-mol color ColorID 22
-mol material AOShiny
-mol addrep top
-
-mol smoothrep top 0 5 
-mol smoothrep top 1 5 
-mol smoothrep top 2 5
-mol smoothrep top 3 5
-
-display ambientocclusion on
-display shadows on
-display aoambient 0.9
-display aodirect 0.2
-display depthcue off
-display projection orthographic
-display resize 800 600
-display rendermode {Tachyon RTX RTRT}
-axes location off
-
-# Get/set viewpoint:
-molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} {{{1 0 0 -60.6021} {0 1 0 -65.806} {0 0 1 -66.7616} {0 0 0 1}} {{0.905554 -0.361229 0.222479 0} {-0.130041 -0.735509 -0.664922 0} {0.403825 0.573183 -0.713014 0} {0 0 0 1}} {{0.0382264 0 0 0} {0 0.0382264 0 0} {0 0 0.0382264 0} {0 0 0 1}} {{1 0 0 -0.02} {0 1 0 -0.08} {0 0 1 0} {0 0 0 1}}}
-
-set nf [molinfo top get numframes]
-
-for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
-   animate goto $i 
-   display update
-   puts "Rendering frame $i to $j .ppm"
-   render TachyonLOptiXInternal $j.ppm
-   }
-{% endraw %}
-~~~
-{: .vmd}
+>## Create a movie showing the diffusion of several Na+ ions. 
+> The animation should look like the one below.
+> {% raw %}
+> <div style="margin: 40px 0; text-align: center;">
+> <video controls width="80%">
+>   <source src="https://github.com/ComputeCanada/molmodsim-vmd-visualization/releases/download/v1.0.0/movie.mp4" type="video/mp4">
+>   Your browser does not support the video tag.
+> </video>
+> </div>
+> {% endraw %} 
+> - Use trajectory mdcrd_nowat.xtc from example_02. 
+> - You can use the selection 'resid 966 1136 904 903' for sodium ions. These sodium ions display association-dissociation dynamics.
+> - Viewpoint is defined by four transformation matrices in VMD, and there are methods to get and set them: 
+>
+> ~~~
+>  molinfo top get {center_matrix rotate_matrix scale_matrix global_matrix}
+>  molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix}
+> ~~~
+> {: .vmd}  
+> - Start with the following script:  
+>
+> ~~~
+> mol new prmtop_nowat.parm7
+> mol addfile mdcrd_nowat.xtc waitfor all
+> 
+> display ambientocclusion on
+> display shadows on
+> display aoambient 0.9
+> display aodirect 0.2
+> display depthcue off
+> display projection orthographic
+> display resize 800 600
+> display rendermode {Tachyon RTX RTRT}
+> axes location off
+>
+> mol delrep 0 top
+> mol selection {protein}
+> mol representation NewCartoon
+> mol color ColorID 8
+> mol material Diffuse
+> mol addrep top
+> mol representation Licorice 0.200000 12.000000 12.000000
+> mol addrep top
+> 
+> # Fix 1: add nucleic acids  
+> # < ... >
+> 
+> # Fix 2: add sodium ions  
+> # < ... >
+> 
+> # Fix 3: correct the line below to smooth all representations  
+> foreach i {0 1} { mol smoothrep top $i 5 }
+> 
+> # Fix 4: interactively obtain a good view and set the viewpoint 
+> # < ... >
+> 
+> set nf [molinfo top get numframes]  
+> for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
+>    animate goto $i 
+>    display update
+>    puts "Rendering frame $i to $j .ppm"
+>    render TachyonLOptiXInternal $j.ppm
+> }
+> quit
+> ~~~
+> {: .vmd}
+>
+>> ## Solution
+>> ~~~
+>> {% raw %}
+>> mol new prmtop_nowat.parm7
+>> mol addfile mdcrd_nowat.xtc waitfor all
+>> 
+>> mol delrep 0 top
+>> mol selection {protein}
+>> mol representation NewCartoon
+>> mol color ColorID 8
+>> mol material Diffuse
+>> mol addrep top
+>> mol representation Licorice 0.200000 12.000000 12.000000
+>> mol addrep top
+>> 
+>> mol selection {nucleic noh}
+>> mol representation CPK 1.600000 1.400000 12.000000 12.000000
+>> mol color Charge
+>> mol material AOShiny
+>> mol addrep top
+>> 
+>> mol selection {resid 966 1136 904 903}
+>> mol representation VDW
+>> mol color ColorID 22
+>> mol material AOShiny
+>> mol addrep top
+>> 
+>> foreach i {0 1 2 3} { mol smoothrep top $i 5 }
+>> 
+>> display ambientocclusion on
+>> display shadows on
+>> display aoambient 0.9
+>> display aodirect 0.2
+>> display depthcue off
+>> display projection orthographic
+>> display resize 800 600
+>> display rendermode {Tachyon RTX RTRT}
+>> axes location off
+>> 
+>> # Get/set viewpoint:
+>> molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} {{{1 0 0 -60.6021} {0 1 0 -65.806} {0 0 1 -66.7616} {0 0 0 1}} {{0.905554 -0.361229 0.222479 0} {-0.130041 -0.735509 -0.664922 0} {0.403825 0.573183 -0.713014 0} {0 0 0 1}} {{0.0382264 0 0 0} {0 0.0382264 0 0} {0 0 0.0382264 0} {0 0 0 1}} {{1 0 0 -0.02} {0 1 0 -0.08} {0 0 1 0} {0 0 0 1}}}
+>> 
+>> set nf [molinfo top get numframes]
+>> 
+>> for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
+>>    animate goto $i 
+>>    display update
+>>    puts "Rendering frame $i to $j .ppm"
+>>    render TachyonLOptiXInternal $j.ppm
+>> }
+>> quit
+>> {% endraw %}
+>> ~~~
+>> {: .vmd}
+>>
+>> {: .language-bash}
+> {: .solution}
+{: .challenge}
 
 
 The basic loop for making a trajectory movie must render image of each trajectory frame and save them. It is convenient to write a tcl procedure for this. Tcl procedures are defined as follows: 
