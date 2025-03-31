@@ -105,7 +105,6 @@ make linux-64-thr && ln -s ../compile/linux-64-thr/tachyon $INSTALLDIR
 
 - Check out [Publication Figure Rendering With Tachyon](https://www.ks.uiuc.edu/Research/vmd/minitutorials/tachyonao/) for more details.
 
-
 ### Making movies
 #### Movie maker
 The `Movie Maker` extension offers several types of animations. You can make a movie of rotation of rocking a static structure, or animate a trajectory with an optional viewpoint rocking. The default compression algorithm is also a very basic quality mpeg-2 encoder optimized for speed on a single computer.  
@@ -137,8 +136,6 @@ With a custom animation script you have full control of camera movements and spe
 Much better image rendering can be done in a reasonable time on an HPC cluster. Typically you would use VMD to write scene description files of every trajectory frame for subsequent rendering with a ray tracing engine such as Tachyon. Once input files are ready you submit a script for rendering multiple frames in parallel on hundreds of CPU's. Then you encode all frames in a video with ffmpeg. Much better compression algorithms such as H.265/HEVC or Google VP9 with much higher quality settings can be used to encode an animation with `ffmpeg`.
 {: .instructor_notes}
 
-
-
 >## Create a movie showing the diffusion of several Na+ ions. 
 > The animation should look like the one below.
 > {% raw %}
@@ -149,15 +146,7 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 > </video>
 > </div>
 > {% endraw %} 
-> - Use trajectory mdcrd_nowat.xtc from example_02. 
-> - You can use the selection 'resid 966 1136 904 903' for sodium ions. These sodium ions display association-dissociation dynamics.
-> - Viewpoint is defined by four transformation matrices in VMD, and there are methods to get and set them: 
->
-> ~~~
->  molinfo top get {center_matrix rotate_matrix scale_matrix global_matrix}
->  molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix}
-> ~~~
-> {: .vmd}  
+> Creating a trajectory movie requires rendering and saving each frame of the trajectory.
 > - Start with the following script:  
 >
 > ~~~
@@ -171,10 +160,11 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 > display depthcue off
 > display projection orthographic
 > display resize 800 600
-> display rendermode {Tachyon RTX RTRT}
+> #display rendermode {Tachyon RTX RTRT}
 > axes location off
 >
 > mol delrep 0 top
+> # Protein NewCartoon + Licorice
 > mol selection {protein}
 > mol representation NewCartoon
 > mol color ColorID 8
@@ -183,28 +173,72 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 > mol representation Licorice 0.200000 12.000000 12.000000
 > mol addrep top
 > 
-> # Fix 1: add nucleic acids  
-> # < ... >
+> # Fix 1: complete the code creating nucleic acids representation 
+> #mol selection ...?
+> #mol representation ...?
+> #mol color Charge
+> #mol material AOShiny
+> #mol addrep top
+>
+> # Fix 2: complete the code creating ions representation
+> #mol selection ...?
+> #mol representation VDW
+> #mol color ColorID 22
+> #mol material ...?
+> #mol addrep top
 > 
-> # Fix 2: add sodium ions  
-> # < ... >
-> 
-> # Fix 3: correct the line below to smooth all representations  
+> # Fix 3: correct the line below to smooth all four representations  
 > foreach i {0 1} { mol smoothrep top $i 5 }
 > 
 > # Fix 4: interactively obtain a good view and set the viewpoint 
-> # < ... >
+> #molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} ...? 
 > 
-> set nf [molinfo top get numframes]  
+> # Fix 5: change the line below to use all frames, use molinfo to get numframes
+> set nf 500
+>
 > for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
 >    animate goto $i 
 >    display update
 >    puts "Rendering frame $i to $j .ppm"
->    render TachyonLOptiXInternal $j.ppm
+>    render snapshot $j.ppm # Graphical display required
+>    #render TachyonLOptiXInternal $j.ppm  # Nvidia GPU required
 > }
 > quit
 > ~~~
 > {: .vmd}
+>
+> - Use data in the directory example_02
+> - You can use selection [resid 966 1136 904 903] for sodium ions. These ions are interesting to show because they display association-dissociation dynamics. 
+> - Viewpoints are defined by four transformation matrices in VMD, and there are methods to get and set them:
+> 
+> ~~~
+>  molinfo top get {center_matrix rotate_matrix scale_matrix global_matrix}
+>  molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix}
+> ~~~
+> {: .vmd} 
+> - Render frames as *.ppm files using the script:
+>
+>  ~~~
+> vmd -e movie_script.vmd
+>  ~~~
+> {: .language-bash}
+> Create a movie from *.ppm files using ffmpeg:
+>
+>  ~~~
+> ffmpeg -start_number 1 -i %d.ppm -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset veryslow movie.mp4
+>  ~~~
+> {: .language-bash}
+>
+> - Try adding rotation and scaling:
+>
+> ~~~
+> rotate x by 0.5
+> scale by 0.995
+> ~~~
+>{: .vmd}
+>
+- Getting rid of translational/rotational motion will improve the animation. Add code aligning each frame to the reference.  
+> Note: with snapshot rendering method display resize in script does not work, set size in ~/.vmdrc 
 >
 >> ## Solution
 >> ~~~
@@ -245,7 +279,7 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 >> display rendermode {Tachyon RTX RTRT}
 >> axes location off
 >> 
->> # Get/set viewpoint:
+>> # Set viewpoint:
 >> molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} {{{1 0 0 -60.6021} {0 1 0 -65.806} {0 0 1 -66.7616} {0 0 0 1}} {{0.905554 -0.361229 0.222479 0} {-0.130041 -0.735509 -0.664922 0} {0.403825 0.573183 -0.713014 0} {0 0 0 1}} {{0.0382264 0 0 0} {0 0.0382264 0 0} {0 0 0.0382264 0} {0 0 0 1}} {{1 0 0 -0.02} {0 1 0 -0.08} {0 0 1 0} {0 0 0 1}}}
 >> 
 >> set nf [molinfo top get numframes]
@@ -264,47 +298,18 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 >> {: .language-bash}
 > {: .solution}
 {: .challenge}
-
-
-The basic loop for making a trajectory movie must render image of each trajectory frame and save them. It is convenient to write a tcl procedure for this. Tcl procedures are defined as follows: 
-
-~~~
-proc { arguments } { 
-   block of code
-}
-~~~
-
-~~~
-proc makemovie { start end } {
-for { set i $start } { $i < $end } { incr i } {
-   animate goto $i 
-   display update
-   puts "Rendering frame $i"
-   render snapshot tmp/$i.ppm
-   }
-}
-~~~
-{: .vmd}
-
-Make sure the directory `tmp` exists in the working directory!
-Try adding rotation and scaling in the for loop:
-
-~~~
-rotate x by 0.5
-scale by 0.995
-~~~
-{: .vmd}
-
-It is better to eliminate translational/rotational motions before making an animation. Add code aligning each frame to the reference. 
+ 
 
 #### Encoding movies with ffmpeg
-- MPEG-2 I-frame only Highest Quality Encoding
+- MPEG-2 I-frame only Highest Quality Encoding 
+
 ~~~
 ffmpeg -start_number <first_frame> -i %d.ppm -vcodec mpeg2video -pix_fmt yuv420p -q:v 1 -an  movie.m2v
 ~~~
 {: .language-bash}
 
 - H.264 I-frame only Highest Quality Encoding
+
 ~~~
 ffmpeg -start_number <first_frame>  -i %d.ppm -vcodec libx264 -pix_fmt yuv420p -crf 18 -s 1080x720 -preset veryslow movie.mp4
 ~~~
