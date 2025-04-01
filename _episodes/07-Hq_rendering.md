@@ -115,18 +115,12 @@ FFmpeg is a powerful tool that can be used to encode videos with high quality co
 Standard options in movie maker are fairly limited. It will simply rotate a molecule or loop over all trajectory frames with a chosen step. If you want to make something more interesting such as zooming at the molecule and moving camera around it then you have to write a script.
 {: .instructor_notes}
 
-- 'protein noh', 'New Cartoon', 'ColorID 8'
-- 'resid 966 1136 904 903', 'VDW', 'ColorID 22'
-- 'nucleic noh', 'VDW', 'charge'
-- Trajectory smoothing window size 10, step 5 ?
-
 - `Extensions` -> `Visualization` -> `Movie Maker`
 - `Movie settings` -> `Rotation about Y axis`
 - `Format` -> `MPEG2(ffmpeg)`
 - Optionally `Set working directory` 
 - In the `Movie durations (seconds)` box enter 10
 - Press `Make movie`
-
 
 For a trajectory movie duration is defined by the number of frames and trajectory step size. So for 3140 frames with stepsize 2 durarion is 3140/(24fps*2)=65 sec.
 
@@ -140,7 +134,7 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 > The animation should look like the one below.
 > {% raw %}
 > <div style="margin: 40px 0; text-align: center;">
-> <video controls width="80%">
+> <video controls width="70%; max-width: 800px;">
 >   <source src="https://github.com/ComputeCanada/molmodsim-vmd-visualization/releases/download/v1.0.0/movie.mp4" type="video/mp4">
 >   Your browser does not support the video tag.
 > </video>
@@ -282,9 +276,16 @@ Much better image rendering can be done in a reasonable time on an HPC cluster. 
 >> # Set viewpoint:
 >> molinfo top set {center_matrix rotate_matrix scale_matrix global_matrix} {{{1 0 0 -60.6021} {0 1 0 -65.806} {0 0 1 -66.7616} {0 0 0 1}} {{0.905554 -0.361229 0.222479 0} {-0.130041 -0.735509 -0.664922 0} {0.403825 0.573183 -0.713014 0} {0 0 0 1}} {{0.0382264 0 0 0} {0 0.0382264 0 0} {0 0 0.0382264 0} {0 0 0 1}} {{1 0 0 -0.02} {0 1 0 -0.08} {0 0 1 0} {0 0 0 1}}}
 >> 
->> set nf [molinfo top get numframes]
+>> set ref_sel [atomselect top "protein and backbone" frame 0]
+>> set fit_sel [atomselect top "protein and backbone"]
+>> set all_sel [atomselect top all]
 >> 
+>> set nf [molinfo top get numframes]
 >> for { set i 1; set j 1 } { $i < $nf } { incr i 5; incr j} {
+>>    $fit_sel frame $i
+>>    $all_sel frame $i
+>>    set trans_mat [measure fit $fit_sel $ref_sel]
+>>    $all_sel move $trans_mat
 >>    animate goto $i 
 >>    display update
 >>    puts "Rendering frame $i to $j .ppm"
