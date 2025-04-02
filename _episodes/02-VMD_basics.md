@@ -16,14 +16,12 @@ keypoints:
 ---
 
 ### Starting VMD
-#### Starting VMD on a cluster
+#### Starting VMD on the training cluster
 Open a terminal: 
-`Applications` --> `System Tools` --> `Mate Terminal`
-~~~
-module load StdEnv/2023 vmd
-vmd
-~~~
-{: .language-bash}
+`Applications` --> `System Tools` --> `Mate Terminal`  
+
+On the training cluster, vmd is already installed. Just type "vmd" to run it.
+
 #### Starting VMD on Windows
 Use the VMD desktop launcher. 
 
@@ -137,9 +135,9 @@ In order to make a figure that is clear and impactful, it is useful to display d
 - Most often used selection keywords are `noh`, `backbone`, `protein`, `nucleic`, `resname`, `resid`, `index`
 - Selecting a residue: `residue` (starts from 0), `resid` (read from a file)
 - Selecting an atom: `index` (starts from 0), `serial` (starts from 1)
-- Selecting hetero atoms: not (protein or nucleic or resname HOH)
-- Limit selection to one monomer: not (protein or nucleic or resname HOH)
 - Use logical operators (and, or, not) for complex selections
+- Selecting hetero atoms: `not (protein or nucleic or resname HOH)`
+- Limit selection to one monomer: `chain A`
 - Selecting atoms based on distance: 
    - `within 5 of serial 93` - selects all atoms located within 3 Angstrom of atom #93
    - `same residue as within 5 of serial 93` - selects whole residues if any atom is within 5 A of atom #93. 
