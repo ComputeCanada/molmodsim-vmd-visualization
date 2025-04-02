@@ -54,7 +54,7 @@ To use VMD GUI on Alliance clusters you need to establish graphical connection. 
 #### Connecting to the training cluster
 - ssh:        moledyn.ace-net.training  
 - JupyterHub: jupyter.moledyn.ace-net.training
-- [Login sheet](https://docs.google.com/spreadsheets/d/1AuDVyVHqoNq1SoGAgUAZcDodbAOVO2jYxvuei4ybG38/edit?usp=sharing)
+- [Login sheet](https://docs.google.com/spreadsheets/d/1OpeT4APsJgxe4iPu3snuHaAXR9cpRzXzBFgPudQZ03s)
 
 ### Connecting graphically to a cluster with JupyterHub 
 JupyterHub provides remote desktop via noVNC (the open source VNC client). JupyterHub runs in any browser. It is convenient to use as it allocates resources and launches remote desktop in one step without requiring any additional software.
