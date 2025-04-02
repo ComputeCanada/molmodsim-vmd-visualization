@@ -16,15 +16,14 @@ keypoints:
 ### Get workshop example data
 On the training cluster:
 ~~~
-cd ~/scratch
-cp /tmp/workshop_vmd_2024.tar.gz .
+cp /project/60104/workshop_vmd_2024.tar.gz .
 tar -xf workshop_vmd_2024.tar.gz 
 ~~~
 {: .language-bash}
 
 On any other computer:
 ~~~
-curl -OL https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_vmd_2024.tar.gz
+wget https://github.com/ComputeCanada/molmodsim-amber-md-lesson/releases/download/workshop-2021-04/workshop_vmd_2024.tar.gz
 ~~~
 {: .language-bash}
 
@@ -50,7 +49,7 @@ It is best to use structure files that contain connectivity information whenever
 As an example, open `Tk Console` and run the following commands to load the file 7xcq.pdb without automatic bond determination:
 
 ~~~
-cd ~/scratch/workshop_vmd/example_01
+cd ~/workshop_vmd/example_01
 mol new 7xcq.pdb autobonds off
 ~~~
 {: .vmd}
@@ -64,7 +63,7 @@ Once a molecular structure has been loaded you can add a trajectory to it: highl
 >## Loading trajectory using commands on the training cluster
 >
 >~~~
->cd ~/scratch/workshop_vmd/example_02
+>cd ~/workshop_vmd/example_02
 >mol new prmtop_nowat.parm7
 >mol addfile mdcrd_nowat.xtc step 5
 >~~~
@@ -111,7 +110,6 @@ The RMSD is a numerical measurement of the difference between two structures: a 
     - use a specific part ot the system (e.g. resid 20 to 80)
 5. You can optionally save rmsd in a file so you can make a nice figure with your favorite plotting software, and check `Plot` box to view the result.
  
-
 >## Calculate the RMSD for two groups of atoms over time 
 > Align frames using backbone of all protein residues. Compute trajectory RMSD for two selections of backbone atoms: residues 790-810 and 820-840.  
 >
@@ -146,7 +144,6 @@ The `RMSD calculator` is similar to the `RMSD Trajectory Tool`, but it calculate
 >>
 >{: .solution}
 {: .challenge}
-
 
 {% include links.md %}
 
