@@ -17,7 +17,7 @@ keypoints:
 {: .instructor_notes} 
 Molecular modelling and simulations are widely used in structural biology, chemistry, drug design, materials science and many other fields of science. Visualization is one of the most useful means for evaluating the quality of molecular models. The ability to visualize atomic details is crucial to understanding molecular functions. 
 
-Visualizing macromolecular structures is challenging, and it requires specialized software. VMD is one of the molecular visualization packages. Alternative molecular visualization software includes [UCSF Chimera](https://www.cgl.ucsf.edu/chimera/), [PyMol](https://pymol.org/2/), and [JMol](https://jmol.sourceforge.net/demo/)
+Visualizing macromolecular structures is challenging, and  it requires specialized software. VMD is one of the molecular visualization packages. Alternative molecular visualization software includes [UCSF Chimera](https://www.cgl.ucsf.edu/chimera/), [PyMol](https://pymol.org/2/), and [JMol](https://jmol.sourceforge.net/demo/)
 {: .instructor_notes} 
 
 VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, modeling and analysis of molecular systems. It is developed and freely distributed by the Theoretical and Computational Biophysics Group at the University of Illinois at Urbana-Champaign.
