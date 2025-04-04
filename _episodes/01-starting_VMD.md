@@ -28,7 +28,7 @@ VMD (Visual Molecular Dynamics) is a software package for the 3D visualization, 
 {: .self_study_text} 
 
 ### VMD features
-- VMD works efficiently with large MD trajectories.
+- VMD works efficiently with large trajectories.
 - VMD supports 
     - wide variety of file formats
     - photorealistic rendering of images
